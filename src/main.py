@@ -34,7 +34,7 @@ parser.add_argument('--nhidden_decoder', type=int, default=128, help='size of hi
 parser.add_argument('--ntimestep', type=int, default=10, help='the number of time steps in the window T [10]')
 
 # Training parameters setting
-parser.add_argument('--epochs', type=int, default=10, help='number of epochs to train [10, 200, 500]')
+parser.add_argument('--epochs', type=int, default=5000, help='number of epochs to train [10, 200, 500]')
 parser.add_argument('--resume', type=bool, default=False, help='resume training or not')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate [0.001] reduced by 0.1 after each 10000 iterations')
 parser.add_argument('--ngpu', type=int, default=0, help='number of GPUs to use')
@@ -46,11 +46,12 @@ opt = parser.parse_args()
 
 
 # Read dataset
-X, y = read_data(opt.dataroot, debug=False)
+X, y = read_data(opt.dataroot, debug=True)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Initialize model
 model = DA_rnn(X, y, opt.ntimestep, opt.nhidden_encoder, opt.nhidden_decoder, opt.batchsize, opt.lr, opt.epochs)
-
+model=model.to(device)
 # Train
 model.train()
 
