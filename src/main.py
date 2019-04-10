@@ -1,4 +1,5 @@
-"""Main pipeline of DA-RNN.
+"""
+Main pipeline of DA-RNN.
 
 @author Zhenye Na 05/21/2018
 
@@ -17,8 +18,9 @@ import matplotlib.pyplot as plt
 from torch.autograd import Variable
 
 from ops import *
-from model import *
 
+from model import *
+from dataparse import *
 
 # Parameters settings
 parser = argparse.ArgumentParser(description="DA-RNN")
@@ -38,19 +40,19 @@ parser.add_argument('--epochs', type=int, default=5000, help='number of epochs t
 parser.add_argument('--resume', type=bool, default=False, help='resume training or not')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate [0.001] reduced by 0.1 after each 10000 iterations')
 parser.add_argument('--ngpu', type=int, default=0, help='number of GPUs to use')
-parser.add_argument('--cuda', action='store_true', help='enables cuda')
-
+parser.add_argument('--cuda', action='store_true', help='s')
+parser.add_argument('--debug',type=bool,default=False,help='debug code')
 
 parser.add_argument('--manualSeed', type=int, help='manual seed')
 opt = parser.parse_args()
 
 
 # Read dataset
-X, y = read_data(opt.dataroot, debug=True)
+X, y,X_last = read_extract_data(opt.dataroot, debug=opt.debug)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Initialize model
-model = DA_rnn(X, y, opt.ntimestep, opt.nhidden_encoder, opt.nhidden_decoder, opt.batchsize, opt.lr, opt.epochs)
+model = DA_rnn(X, y,X_last, opt.ntimestep, opt.nhidden_encoder, opt.nhidden_decoder, opt.batchsize, opt.lr, opt.epochs,opt.resume)
 model=model.to(device)
 # Train
 model.train()

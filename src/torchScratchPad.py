@@ -1,4 +1,4 @@
-"""
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -8,9 +8,9 @@ from torch import optim
 from torch.autograd import Variable
 
 
-#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-#print(device)
+print(device)
 #print("hi")
 
 
@@ -23,25 +23,16 @@ print(x)
 #print(y)
 #print(z)
 #print(w)
-h_n=Variable(x.data.new(
-            1, x.size(0),2).zero_())
-s_n=Variable(x.data.new(
-            1, x.size(0), 2).zero_())            
-s_d =h_n.repeat(2, 2, 2).permute(1, 0, 2)
-print(s_d)
-a = torch.cat((h_n.repeat(2, 1, 1).permute(1, 0, 2),
-                           s_n.repeat(2, 1, 1).permute(1, 0, 2),
-                           x.permute(0, 2, 1)), dim=2)
-print(a)   
-b=a.view(-1,7)
-print(b) 
-a=a.view(-1,7).view(-1,2)
-print(a) 
-"""
-import torch
-import pycuda.driver as cuda
-cuda.init()
-print(torch.cuda.current_device())
-print(cuda.Device(0).name())
-print(torch.cuda.memory_allocated())
-print(torch.cuda.memory_cached())
+mask = Variable(x.data.new(
+            x.size(0), 3, 2).zero_()).cuda()
+       
+deltaX= Variable(x.data.new(
+            1,x.size(0),2).zero_()).cuda()
+print(deltaX)
+print(deltaX.size())
+print("breaks")
+deltaX=torch.squeeze(deltaX)            
+print(deltaX)
+print(deltaX.size())
+mask[1,2,1]=8
+print(mask)

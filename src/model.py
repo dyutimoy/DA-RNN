@@ -1,4 +1,5 @@
-"""DA-RNN model initialization.
+"""
+DA-RNN model initialization.
 
 @author Zhenye Na 05/21/2018
 
@@ -9,6 +10,7 @@ References:
 
 """
 from ops import *
+
 #from natureGRU import *
 from torch.autograd import Variable
 
@@ -21,12 +23,57 @@ import torch.nn.functional as F
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
+from torch.nn.parameter import Parameter
+import math
 
 #Need to change the lstm module 
 #In place use GRy nad specific gates to nature paper 
 #Rest will be same .
 
+
+
+
+
+class FilterLinear(nn.Module):
+    def __init__(self, in_features, out_features, filter_square_matrix, bias=True):
+        '''
+        filter_square_matrix : filter square matrix, whose each elements is 0 or 1.
+        '''
+        super(FilterLinear, self).__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+        
+        use_gpu = torch.cuda.is_available()
+        self.filter_square_matrix = None
+        if use_gpu:
+            self.filter_square_matrix = Variable(filter_square_matrix.cuda(), requires_grad=False)
+        else:
+            self.filter_square_matrix = Variable(filter_square_matrix, requires_grad=False)
+        
+        self.weight = Parameter(torch.Tensor(out_features, in_features))
+        if bias:
+            self.bias = Parameter(torch.Tensor(out_features))
+        else:
+            self.register_parameter('bias', None)
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        stdv = 1. / math.sqrt(self.weight.size(1))
+        self.weight.data.uniform_(-stdv, stdv)
+        if self.bias is not None:
+            self.bias.data.uniform_(-stdv, stdv)
+#         print(self.weight.data)
+#         print(self.bias.data)
+
+    def forward(self, input):
+#         print(self.filter_square_matrix.mul(self.weight))
+        return F.linear(input, self.filter_square_matrix.mul(self.weight), self.bias)
+
+    def __repr__(self):
+        return self.__class__.__name__ + '(' \
+            + 'in_features=' + str(self.in_features) \
+            + ', out_features=' + str(self.out_features) \
+            + ', bias=' + str(self.bias is not None) + ')'
 
 
 class Encoder(nn.Module):
@@ -41,7 +88,18 @@ class Encoder(nn.Module):
         self.encoder_num_hidden = encoder_num_hidden
         self.input_size = input_size
         self.parallel = parallel
+        
         self.T = T
+
+
+        self.delta_size=input_size
+        self.identity = torch.eye(input_size).cuda()
+        self.zeros_x = Variable(torch.zeros(self.delta_size).cuda())
+        self.zeros_h= Variable(torch.zeros( self.encoder_num_hidden).cuda())
+        
+        self.gamma_x_l = FilterLinear(self.delta_size, self.delta_size, self.identity)
+        
+        self.gamma_h_l = nn.Linear(self.delta_size, self.encoder_num_hidden)
 
         # Fig 1. Temporal Attention Mechanism: Encoder is LSTM
         self.encoder_lstm = nn.LSTM(
@@ -50,17 +108,30 @@ class Encoder(nn.Module):
         # Construct Input Attention Mechanism via deterministic attention model
         # Eq. 8: W_e[h_{t-1}; s_{t-1}] + U_e * x^k
         self.encoder_attn = nn.Linear(
-            in_features=2 * self.encoder_num_hidden + self.T - 1, out_features=1, bias=True)
+            in_features=2 * self.encoder_num_hidden + (self.T - 1)*2, out_features=1, bias=True)
 
-
-
-    def forward(self, X):
+        #self.inputDecay = nn.Linear(encoder_num_hidden + 1, 1)
+        #self.stateDecay=
+    def forward(self, X,X_last):
         """forward.
 
         Args:
             X
 
         """
+
+        mask = Variable(X.data.new(
+            X.size(0), self.T - 1, self.input_size).zero_()).cuda()
+       
+        X_mean=Variable(X.data.new(
+            X.size(0), self.input_size).zero_()).cuda()
+       
+        
+        deltaX=Variable(X.data.new(
+            X.size(0), self.T - 1, self.input_size).zero_()).cuda()
+        #using the decay
+        X_new = Variable(X.data.new(
+            X.size(0), self.T - 1, self.input_size).zero_()).cuda()
         X_tilde = Variable(X.data.new(
             X.size(0), self.T - 1, self.input_size).zero_()).cuda()
         X_encoded = Variable(X.data.new(
@@ -74,44 +145,117 @@ class Encoder(nn.Module):
 
         # hidden, cell: initial states with dimention hidden_size
 
-        #print(X_tilde.size())
+        #print(X_tilde.size())ma
         #print("s")
         h_n = self._init_states(X)
         s_n = self._init_states(X)
         #print("s")
         #print(h_n.size())
         #print("s")
+        #print("x size",X.size())
+        for t in range(self.T-1):
+            for bs in range(X.size(0)):
+                for fea in range(self.input_size):
+                    #print(t," t",bs,"bs",fea," fea")
+                    if( (X[bs,t,fea])!=0):
+                        mask[bs][t][fea]=1
+                        
+                           
+
+                    if( t>0 and (X[bs,t-1,fea])==0 ):
+                        deltaX[bs][t][fea]=deltaX[bs][t-1][fea]+1
+                       
+                       
+                    elif(t>0 and (X[bs,t-1,fea])!=0 ):
+                        deltaX[bs][t][fea]=1
+
+        for bs in range(X.size(0)):
+                for fea in range(self.input_size):       
+                    count=0
+                    sum_val=0
+                    for t in range(self.T-1):
+                        if((X[bs,t,fea])!=0) :
+                            sum_val= sum_val+X[bs,t,fea]
+                            count=count+1
+                    if(count !=0):        
+                        X_mean[bs,fea]=sum_val/count
+        
+        
+
         for t in range(self.T - 1):
             # batch_size * input_size * (2*hidden_size + T - 1)
+            
+            
+            delta_x = torch.exp(-torch.max(self.zeros_x, self.gamma_x_l(deltaX[:,t,:].view(-1, self.input_size))))
+            delta_h = torch.exp(-torch.max(self.zeros_h, self.gamma_h_l(deltaX[:,t,:].view(-1, self.delta_size))))
+            #print("time t",t)
+            
+            #print("delta_x",delta_x.size(),"delta_h",delta_h.size(),"mask",mask.size())
+            #print("X",X.size(),"X_last",X_last.size(),"X_mean",X_mean.size())
+        
+            #X_new[:, t, :]=torch.mul(delta_x , X_last[:, t, :])
+            #"steps"
+            A1=torch.mul(delta_x , X_last[:, t, :])
+            
+            A2= torch.mul((1 - delta_x) , X_mean)
+
+            
+            A3=torch.mul((1 - mask[:, t, :]),A1+A2)
+            
+            A4=torch.mul(mask[:, t, :],X[:, t, :])
+            
+
+            X_new[:, t, :] = A3+A4
+            
+            
+            
+            
+            h_n=torch.squeeze(h_n)
+            
+            h_n = torch.mul(delta_h,h_n)
+            
+            h_n=torch.unsqueeze(h_n,0)
+            
             x = torch.cat((h_n.repeat(self.input_size, 1, 1).permute(1, 0, 2),
                            s_n.repeat(self.input_size, 1, 1).permute(1, 0, 2),
-                           X.permute(0, 2, 1)), dim=2)
+                           X_new.permute(0, 2, 1),
+                           mask.permute(0,2,1)), dim=2)
             #print(x.size())
+            
             x = self.encoder_attn(
-                x.view(-1, self.encoder_num_hidden * 2 + self.T - 1))
+                x.view(-1, self.encoder_num_hidden * 2 + (self.T - 1)*2))
             #print("s")
             ##print("s")
             # get weights by softmax
+            
             alpha = F.softmax(x.view(-1, self.input_size))
 
             # get new input for LSTM
             #print("s")
+           
             x_tilde = torch.mul(alpha, X[:, t, :])
             #print(x_tilde.size())
             # encoder LSTM
+            #print("x_size ",x.size())
+            #print("x_tlide",x_tilde.size())
+            
+        
             self.encoder_lstm.flatten_parameters()
             _, final_state = self.encoder_lstm(
                 x_tilde.unsqueeze(0), (h_n, s_n))
             #print("s")
             #print(len(final_state))
             h_n = final_state[0]
+            
             s_n = final_state[1]
+            #if(t==3):
+             #   print("t",t,"h_n ",h_n)
             #print("s")
             #print(h_n.size())
             #rint("s")
             X_tilde[:, t, :] = x_tilde
             X_encoded[:, t, :] = h_n
-
+    
         return X_tilde, X_encoded
 
     def _init_states(self, X):
@@ -182,6 +326,7 @@ class Decoder(nn.Module):
                 c_n = final_states[1]
         # Eqn. 22: final output
         y_pred = self.fc_final(torch.cat((d_n[0], context), dim=1))
+       
 
         return y_pred
 
@@ -201,15 +346,27 @@ class Decoder(nn.Module):
         return initial_states
 
 
+
+
+   
+
+
+"""  
+def extractX_d(inputX):
+        init_X_d=inputX[0,:]    #make sure in data first data has no missing value
+        
+        return init_X_d   
+"""
 class DA_rnn(nn.Module):
     """da_rnn."""
 
-    def __init__(self, X, y, T,
+    def __init__(self, X, y,X_last,T,
                  encoder_num_hidden,
                  decoder_num_hidden,
                  batch_size,
                  learning_rate,
                  epochs,
+                 resume,
                  parallel=False):
         """da_rnn initialization."""
         super(DA_rnn, self).__init__()
@@ -223,9 +380,11 @@ class DA_rnn(nn.Module):
         self.T = T                       #time intreval default 10
         self.X = X
         self.y = y
+        self.X_last=X_last
+        self.resume=resume
 
-        self.
-        self.Encoder = Encoder(input_size=X.shape[1],                          #d-varible size                 
+        #self.X_last=Variable(torch.from_numpy(extractX_d(X)).type(torch.FloatTensor)).cuda()
+        self.Encoder = Encoder(input_size=X.shape[1],                     #d-varible size                 
                                encoder_num_hidden=encoder_num_hidden,
                                T=T)
         self.Decoder = Decoder(encoder_num_hidden=encoder_num_hidden,
@@ -252,6 +411,9 @@ class DA_rnn(nn.Module):
 
     def train(self):
         """training process."""
+
+
+     
         iter_per_epoch = int(np.ceil(self.train_timesteps * 1. / self.batch_size))
         self.iter_losses = np.zeros(self.epochs * iter_per_epoch)
         self.epoch_losses = np.zeros(self.epochs)
@@ -259,6 +421,20 @@ class DA_rnn(nn.Module):
         n_iter = 0
 
         for epoch in range(self.epochs):
+            """
+            if(self.resume==True):
+                
+                checkpointencoder = torch.load("../nasdaq/EncoderEpoch.pt")
+                self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
+                self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
+                epoch = checkpointencoder['epoch']
+                loss = checkpointencoder['loss']
+
+                checkpointdecoder = torch.load("../nasdaq/DecoderEpoch.pt")
+                self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
+                self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
+                print("loading checkpoint "+str(epoch)+"with loss"+str(loss))
+            """
             if self.shuffle:
                 ref_idx = np.random.permutation(self.train_timesteps - self.T)
             else:
@@ -266,20 +442,26 @@ class DA_rnn(nn.Module):
 
             idx = 0
 
-            while (idx < self.train_timesteps):
+            while (idx < self.train_timesteps-self.T):
                 # get the indices of X_train
                 indices = ref_idx[idx:(idx + self.batch_size)]
                 # x = np.zeros((self.T - 1, len(indices), self.input_size))
-                x = np.zeros((len(indices), self.T - 1, self.input_size))
+                x = np.zeros((len(indices), self.T - 1, self.input_size))    #need to change this 
+                #x_last seen matrix
+                x_last=np.zeros((len(indices), self.T - 1, self.input_size))
+                #print(idx ," batch_size",len(indices))
+                #print("ref_idz",ref_idx)
+                #print("train timesteps",self.train_timesteps)
                 y_prev = np.zeros((len(indices), self.T - 1))
                 y_gt = self.y[indices + self.T]
 
                 # format x into 3D tensor
                 for bs in range(len(indices)):
                     x[bs, :, :] = self.X[indices[bs]:(indices[bs] + self.T - 1), :]
+                    x_last[bs, :, :] = self.X_last[indices[bs]:(indices[bs] + self.T - 1), :]
                     y_prev[bs, :] = self.y[indices[bs]:(indices[bs] + self.T - 1)]
 
-                loss = self.train_forward(x, y_prev, y_gt)
+                loss= self.train_forward(x,x_last, y_prev, y_gt)
                 self.iter_losses[epoch * iter_per_epoch + idx // self.batch_size] = loss
 
                 idx += self.batch_size
@@ -295,7 +477,36 @@ class DA_rnn(nn.Module):
 
             if epoch % 10 == 0:
                 print ("Epochs: ", epoch, " Iterations: ", n_iter, " Loss: ", self.epoch_losses[epoch])
+            if epoch % 50 == 0:
+                print("Model's state_dict:")
+                for param_tensor in self.Encoder.state_dict():
+                    print(param_tensor, "\t", self.Encoder.state_dict()[param_tensor].size())
 
+                # Print optimizer's state_dict
+                print("Optimizer's state_dict:")
+                #for var_name in self.encoder_optimizer.state_dict():
+                   # print(var_name, "\t",  self.encoder_optimizer.state_dict()[var_name])
+
+                print("Model's state_dict:")
+                for param_tensor in self.Decoder.state_dict():
+                    print(param_tensor, "\t", self.Decoder.state_dict()[param_tensor].size())
+
+                # Print optimizer's state_dict
+                print("Optimizer's state_dict:")
+                #for var_name in self.decoder_optimizer.state_dict():
+                  #  print(var_name, "\t",  self.decoder_optimizer.state_dict()[var_name])        
+                torch.save({
+                            'epoch': epoch,
+                            'model_state_dict': self.Encoder.state_dict(),
+                            'optimizer_state_dict': self.encoder_optimizer.state_dict(),
+                            'loss': loss
+                            }, "../nasdaq/EncoderEpoch.pt")
+                torch.save({
+                            'epoch': epoch,
+                            'model_state_dict': self.Decoder.state_dict(),
+                            'optimizer_state_dict': self.decoder_optimizer.state_dict(),
+                            'loss': loss
+                            }, "../nasdaq/DecoderEpoch.pt")            
             if epoch == self.epochs - 1:
                 y_train_pred = self.test(on_train=True)
                 y_test_pred = self.test(on_train=False)
@@ -321,13 +532,16 @@ class DA_rnn(nn.Module):
             #                np.array(self.y_true), delimiter=',')
 
 
-    def train_forward(self, X, y_prev, y_gt):
+    def train_forward(self, X,X_last, y_prev, y_gt):
         # zero gradients
         self.encoder_optimizer.zero_grad()
         self.decoder_optimizer.zero_grad()
 
+        #input X not perfect need to change this
+
+
         input_weighted, input_encoded = self.Encoder(
-            Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda())
+            Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda(),Variable(torch.from_numpy(X_last).type(torch.FloatTensor)).cuda())
         y_pred = self.Decoder(input_encoded, Variable(
             torch.from_numpy(y_prev).type(torch.FloatTensor)).cuda())
 
@@ -359,18 +573,20 @@ class DA_rnn(nn.Module):
         while i < len(y_pred):
             batch_idx = np.array(range(len(y_pred)))[i : (i + self.batch_size)]
             X = np.zeros((len(batch_idx), self.T - 1, self.X.shape[1]))
+            X_last=np.zeros((len(batch_idx), self.T - 1, self.X.shape[1]))
             y_history = np.zeros((len(batch_idx), self.T - 1))
 
             for j in range(len(batch_idx)):
                 if on_train:
                     X[j, :, :] = self.X[range(batch_idx[j], batch_idx[j] + self.T - 1), :]
+                    X_last[j,:,:]=self.X[range(batch_idx[j], batch_idx[j] + self.T - 1), :]
                     y_history[j, :] = self.y[range(batch_idx[j],  batch_idx[j]+ self.T - 1)]
                 else:
                     X[j, :, :] = self.X[range(batch_idx[j] + self.train_timesteps - self.T, batch_idx[j] + self.train_timesteps - 1), :]
                     y_history[j, :] = self.y[range(batch_idx[j] + self.train_timesteps - self.T,  batch_idx[j]+ self.train_timesteps - 1)]
 
             y_history = Variable(torch.from_numpy(y_history).type(torch.FloatTensor)).cuda()
-            _, input_encoded = self.Encoder(Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda())
+            _, input_encoded = self.Encoder(Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda(),Variable(torch.from_numpy(X_last).type(torch.FloatTensor)).cuda())
             y_pred[i:(i + self.batch_size)] = self.Decoder(input_encoded, y_history).cpu().data.numpy()[:, 0]
             i += self.batch_size
 
