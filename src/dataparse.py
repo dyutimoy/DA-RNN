@@ -30,7 +30,7 @@ def read_extract_data(input_path, debug=True):
     for i in range(1,X.shape[0]):
         for j in range(1,X.shape[1]):
 
-            if(random.randint(1,1000)<50):
+            if(random.randint(1,1000)<0):
                 X[i,j]=0
                 #print(count)
         
