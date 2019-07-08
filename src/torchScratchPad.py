@@ -8,8 +8,8 @@ from torch import optim
 from torch.autograd import Variable
 
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
+#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+"""
 print(device)
 #print("hi")
 
@@ -24,7 +24,7 @@ print(x)
 #print(z)
 #print(w)
 mask = Variable(x.data.new(
-            x.size(0), 3, 2).zero_()).cuda()
+            x.sizeX[1, 1:9, :](0), 3, 2).zero_()).cuda()
        
 deltaX= Variable(x.data.new(
             1,x.size(0),2).zero_()).cuda()
@@ -36,3 +36,9 @@ print(deltaX)
 print(deltaX.size())
 mask[1,2,1]=8
 print(mask)
+
+
+"""
+X=np.zeros((2,3))
+X[1,0]=8
+print(X)

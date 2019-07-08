@@ -5,7 +5,7 @@ import random
 # matplotlib.use('Agg')
 
 
-def read_extract_data(input_path, debug=True):
+def read_extract_data(input_path, debug=False):
     """Read mobile phone data 
 
     Args:
@@ -16,17 +16,17 @@ def read_extract_data(input_path, debug=True):
         y (np.ndarray): ground truth.
 
     """
-    df = pd.read_csv(input_path, nrows = 250 if debug else None)
+    df = pd.read_csv(input_path, nrows = 100 if debug else None)
     X = df.iloc[:, 0:-1].values
     y = df.iloc[:, -1].values
     
-
+    
     """"generate mask """
    
     X_last=np.zeros_like(X)
     X_last[0,:]=X[0,:]
     count=0
-
+    """
     for i in range(1,X.shape[0]):
         for j in range(1,X.shape[1]):
 
@@ -34,16 +34,17 @@ def read_extract_data(input_path, debug=True):
                 X[i,j]=0
                 #print(count)
         
-    
+    """
 
     for i in range(X.shape[0]):
         for j in range(X.shape[1]):
 
-            if(X[i,j]==0):
+            if(X[i,j]==-1):
                 X_last[i,j]=X_last[i-1,j]
                 #print("count")
             else:
                 X_last[i,j]=X[i,j]
+    
 
     """generate delta"""
     """generate X_last"""
