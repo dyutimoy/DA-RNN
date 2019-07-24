@@ -86,18 +86,18 @@ def mobile_phone(vars):
     
     max1=4
     max2=7.1
-    max3=2005
+    max3=700
     max4=2.7
     max5=9.7
     max6=24
     max7=64
     val=model.evalModel(x_input)
-    print(val)
+    print(val,x_input)
     return [val,((max1-x1)/(max1-min1))+((max2-x2)/(max2-min2))+((max3-x3)/(max3-min3))+((max4-x4)/(max4-min4))+((max5-x5)/(max5-min5))+((max6-x6)/(max6-min6))+((max7-x7)/(max7-min7))]
     
 
 problem1=Problem(7,2,0)
-problem1.types[:]=[Real(0,4),Real(1.5,7.1),Real(50,2005),Real(0.4,2.7),Real(1.2,9.7),Real(0.9,24),Real(0,64)]
+problem1.types[:]=[Real(0,4),Real(1.5,7.1),Real(50,700),Real(0.4,2.7),Real(1.2,9.7),Real(0.9,24),Real(0,64)]
 
 problem1.function=mobile_phone
 

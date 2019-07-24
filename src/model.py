@@ -159,10 +159,7 @@ class Encoder(nn.Module):
         #print(h_n.size())
         #print("s")
         #print("x size",X.size())
-        minX=Variable(X.data.new(
-            X.size(0), self.input_size).zero_()).cuda()+99999
-        maxX=Variable(X.data.new(
-            X.size(0), self.input_size).zero_()).cuda()
+        
         for t in range(self.T):
             for bs in range(X.size(0)):
                 for fea in range(self.input_size):
@@ -186,10 +183,7 @@ class Encoder(nn.Module):
                     for t in range(self.T):
                         if((X[bs,t,fea])!=-1) :
                             sum_val= sum_val+X[bs,t,fea]
-                            if(maxX[bs,fea]<X[bs,t,fea]):
-                                maxX[bs,fea]=X[bs,t,fea]
-                            if(minX[bs,fea]>X[bs,t,fea]):
-                                minX[bs,fea]=X[bs,t,fea]
+                            
                             count=count+1
                     if(count !=0):        
                         X_mean[bs,fea]=sum_val/count
@@ -331,21 +325,8 @@ class Decoder(nn.Module):
         """forward."""
         d_n = self._init_states(X_encoed)
         c_n = self._init_states(X_encoed)
-
-        y_prev_clone=y_prev
-        minY=Variable(X_encoed.data.new(
-            X_encoed.size(0)).zero_()).cuda()+99999
-        maxY=Variable(X_encoed.data.new(
-            X_encoed.size(0)).zero_()).cuda()
-        for bs in range(y_prev.size(0)):
-            for t in range(self.T-1):
-                if(maxY[bs]<y_prev[bs,t]):
-                    maxY[bs]=y_prev[bs,t]
-                if(minY[bs]>y_prev[bs,t]):
-                    minY[bs]=y_prev[bs,t]
-            for t_ in range(self.T-1):        
-                y_prev[bs,t_]= (y_prev_clone[bs,t_] -minY[bs])/(maxY[bs]-minY[bs])      
-           
+    
+            
         for t in range(self.T - 1):
 
             x = torch.cat((d_n.repeat(self.T , 1, 1).permute(1, 0, 2),
@@ -377,12 +358,9 @@ class Decoder(nn.Module):
                 c_n = final_states[1]
         # Eqn. 22: final output
         y_predi = self.fc_final1(torch.cat((d_n[0], context), dim=1))
-        y_predf =self.fc_final2(y_predi)
+        y_pred =self.fc_final2(y_predi)
        
-        y_pred=Variable(y_predf.data.new(
-            y_predf.size(0),1).zero_()).cuda()
-        for bs in range(y_prev.size(0)): 
-            y_pred[bs]=y_predf[bs]*(maxY[bs]-minY[bs])+minY[bs]
+        
         #print("y",y_pred)    
         
         return y_pred
@@ -475,7 +453,9 @@ class DA_rnn(nn.Module):
             epoch_start=0
         iter_per_epoch = int(np.ceil(self.train_timesteps * 1. / self.batch_size))
         self.iter_losses = np.zeros((self.epochs-epoch_start) * iter_per_epoch)
+        self.iter_train_losses = np.zeros((self.epochs-epoch_start) * iter_per_epoch)
         self.epoch_losses = np.zeros((self.epochs-epoch_start))
+        self.epoch_test_losses= np.zeros((self.epochs-epoch_start))
 
         n_iter = 0
 
@@ -523,6 +503,32 @@ class DA_rnn(nn.Module):
 
             self.epoch_losses[epoch] = np.mean(self.iter_losses[range(epoch * iter_per_epoch, (epoch + 1) * iter_per_epoch)])
 
+            self.test_loss_val=self.test_loss()
+
+            self.epoch_test_losses[epoch]=self.test_loss_val
+
+            if(epoch>100):
+                plt.ioff()
+                fig7=plt.figure()
+                plt.plot(range(0,epoch ),
+                         self.epoch_test_losses[range(0,epoch)], label="True")
+                
+                plt.legend(loc='upper left')
+                plt.savefig("7_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.close(fig7)
+
+            if(epoch>100):
+                plt.ioff()
+                fig8=plt.figure()
+                plt.plot(range(0,epoch ),
+                         self.epoch_losses[range(0,epoch)], label="True")
+                
+                plt.legend(loc='upper left')
+                plt.savefig("8_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.close(fig8)    
+
+
+
             if epoch % 10 == 0:
                 print ("Epochs: ", epoch+epoch_start, " Iterations: ", n_iter, " Loss: ", self.epoch_losses[epoch])
             if epoch % 50 == 0 and self.epoch_losses[epoch]<min_loss:
@@ -548,13 +554,13 @@ class DA_rnn(nn.Module):
                             'model_state_dict': self.Encoder.state_dict(),
                             'optimizer_state_dict': self.encoder_optimizer.state_dict(),
                             'loss': loss
-                            },( "../nasdaq/EncoderEpochnew"+str(epoch+epoch_start)+".pt"))
+                            },( "../nasdaq/EncoderEpochnew"+str(epoch+epoch_start)+"_23_7.pt"))
                 torch.save({
                             'epoch': epoch+epoch_start,
                             'model_state_dict': self.Decoder.state_dict(),
                             'optimizer_state_dict': self.decoder_optimizer.state_dict(),
                             'loss': loss
-                            }, ("../nasdaq/DecoderEpochnew"+str(epoch+epoch_start)+".pt"))
+                            }, ("../nasdaq/DecoderEpochnew"+str(epoch+epoch_start)+"_23_7.pt"))
                 min_loss= self.epoch_losses[epoch]      
                       
             if (epoch+epoch_start)%50==0 :
@@ -570,7 +576,7 @@ class DA_rnn(nn.Module):
                 plt.plot(range(self.T + len(y_train_pred), len(self.y) + 1),
                          y_test_pred, label='Predicted - Test')
                 plt.legend(loc='upper left')
-                plt.savefig("4_new"+str(epoch+epoch_start)+".png")
+                plt.savefig("4_new"+str(epoch+epoch_start)+"_23_7.png")
                 plt.close(fig4)
                 
                 plt.ioff()
@@ -581,7 +587,7 @@ class DA_rnn(nn.Module):
                          y_test_pred, label='Predicted - Test')
                
                 plt.legend(loc = 'upper left')
-                plt.savefig("5_new"+str(epoch+epoch_start)+".png")
+                plt.savefig("5_new"+str(epoch+epoch_start)+"_23_7.png")
                 plt.close(fig5)
                 plt.ioff()
                 fig6 = plt.figure()
@@ -591,10 +597,9 @@ class DA_rnn(nn.Module):
                          y_train_pred, label='Predicted - Train')
                
                 plt.legend(loc = 'upper left')
-                plt.savefig("6_new"+str(epoch+epoch_start)+".png")
+                plt.savefig("6_new"+str(epoch+epoch_start)+"_23_7.png")
                 plt.close(fig6)
-                
-                np.savetxt("epoch_loss1_"+str(epoch+epoch_start)+".csv",  +self.epoch_losses, delimiter=",")
+                np.savetxt("epoch_loss1_"+str(epoch+epoch_start)+"_23_7.csv",  +self.epoch_losses, delimiter=",")
 
 
             # Save files in last iterations
@@ -633,6 +638,40 @@ class DA_rnn(nn.Module):
 
 
 
+    def test_loss(self):
+        y_pred = np.zeros((self.X.shape[0] - self.train_timesteps,1))
+
+        i = 0
+        while i < len(y_pred):
+            batch_idx = np.array(range(len(y_pred)))[i : (i + self.batch_size)]
+            X = np.zeros((len(batch_idx), self.T , self.X.shape[1]))
+            X_last=np.zeros((len(batch_idx), self.T, self.X.shape[1]))
+            y_history = np.zeros((len(batch_idx), self.T - 1))
+
+            for j in range(len(batch_idx)):
+                X[j, :, :] = self.X[range(batch_idx[j] + self.train_timesteps - self.T, batch_idx[j] + self.train_timesteps ), :]
+                X_last[j,:,:]=self.X_last[range(batch_idx[j] + self.train_timesteps - self.T, batch_idx[j] + self.train_timesteps), :]
+                y_history[j, :] = self.y[range(batch_idx[j] + self.train_timesteps - self.T,  batch_idx[j]+ self.train_timesteps - 1)]
+
+            y_history = Variable(torch.from_numpy(y_history).type(torch.FloatTensor)).cuda()
+            _, input_encoded = self.Encoder(Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda(),Variable(torch.from_numpy(X_last).type(torch.FloatTensor)).cuda())
+            y_pred[i:(i + self.batch_size)] = self.Decoder(input_encoded, y_history).detach().cpu().numpy()
+            i += self.batch_size
+
+        y_gt=self.y[range(self.train_timesteps,self.X.shape[0])]    
+        y_true = Variable(torch.from_numpy(
+            y_gt).type(torch.FloatTensor)).cuda()
+
+        y_predg=Variable(torch.from_numpy(
+            y_pred).type(torch.FloatTensor)).cuda()
+
+        y_true = y_true.view(-1, 1)
+
+        loss = self.criterion(y_predg, y_true)
+        
+        return loss
+        
+
 
     def test(self, on_train=False):
         """test."""
@@ -654,7 +693,7 @@ class DA_rnn(nn.Module):
             for j in range(len(batch_idx)):
                 if on_train:
                     X[j, :, :] = self.X[range(batch_idx[j], batch_idx[j] + self.T ), :]
-                    X_last[j,:,:]=self.X_last[range(batch_idx[j], batch_idx[j] + self.T ), :]
+                    X_last[j,:,:]=self.X[range(batch_idx[j], batch_idx[j] + self.T ), :]
                     y_history[j, :] = self.y[range(batch_idx[j],  batch_idx[j]+ self.T - 1)]
                 else:
                     X[j, :, :] = self.X[range(batch_idx[j] + self.train_timesteps - self.T, batch_idx[j] + self.train_timesteps ), :]
@@ -700,6 +739,6 @@ class DA_rnn(nn.Module):
         _, input_encoded = self.Encoder(Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda(),Variable(torch.from_numpy(X_last).type(torch.FloatTensor)).cuda())
         y_pred = self.Decoder(input_encoded, y_history).cpu().data.numpy()
         #print("y_pred",y_pred)
-        print("X_pred",X_pred)
+        #print("X_pred",X_pred)
         val=y_pred[0,0]
         return val

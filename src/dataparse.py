@@ -24,6 +24,8 @@ def read_extract_data(input_path, debug=False):
     """"generate mask """
    
     X_last=np.zeros_like(X)
+    y_norm=np.zeros((X.shape[0],),dtype=float)
+    
     X_last[0,:]=X[0,:]
     count=0
     """
@@ -35,6 +37,48 @@ def read_extract_data(input_path, debug=False):
                 #print(count)
         
     """
+
+
+    for j in range(X.shape[1]):
+        max_val=0.0
+        min_val=99999999.9999
+        for i in range(X.shape[0]):
+            if(X[i,j]!=-1 and X[i,j]<min_val):
+                min_val=X[i,j]
+
+            if(X[i,j]!=-1 and X[i,j]>max_val):
+                max_val=X[i,j]
+        den=max_val-min_val            
+        for ix in range(X.shape[0]):
+            if(X[ix,j]!=-1):
+                X[ix,j]=(X[ix,j]-min_val)/den
+
+
+         
+    max_valy=0.0
+    min_valy=99999999.99      
+    for i in range(X.shape[0]):
+        
+        if( y[i]<min_valy):
+            min_valy=y[i]
+
+        if( y[i]>max_valy):
+            max_valy=y[i]
+        
+    den_y=max_valy-min_valy    
+    #print(max_valy-min_valy)
+    for i in range(X.shape[0]):
+        
+        a=(y[i]-min_valy)/den_y
+        print(a)
+        y_norm[i]=float(a)
+        #print(y_norm[i])
+        
+                              
+
+
+    #np.savetxt("hi.csv", X, delimiter=",")
+    #np.savetxt("hssi.csv", y_norm, delimiter=",")
 
     for i in range(X.shape[0]):
         for j in range(X.shape[1]):
@@ -49,4 +93,4 @@ def read_extract_data(input_path, debug=False):
     """generate delta"""
     """generate X_last"""
 
-    return X, y, X_last
+    return X, y_norm, X_last
