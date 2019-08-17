@@ -437,19 +437,22 @@ class DA_rnn(nn.Module):
     def train(self):
         """training process."""
         min_loss=999999
+        
         if(self.resume==True):
-
-                checkpointencoder = torch.load("../nasdaq/EncoderEpochnew300.pt")
+                """
+                checkpointencoder = torch.load("../weights_new/EncoderEpochnew300.pt")
                 self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
                 self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
                 epoch_start = checkpointencoder['epoch']
                 loss = checkpointencoder['loss']
 
-                checkpointdecoder = torch.load("../nasdaq/DecoderEpochnew300.pt")
+                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew300.pt")
                 self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
                 self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
                 print("loading checkpoint "+str(epoch_start)+"with loss"+str(loss))
+                """
         else:
+
             epoch_start=0
         iter_per_epoch = int(np.ceil(self.train_timesteps * 1. / self.batch_size))
         self.iter_losses = np.zeros((self.epochs-epoch_start) * iter_per_epoch)
@@ -514,7 +517,7 @@ class DA_rnn(nn.Module):
                          self.epoch_test_losses[range(0,epoch)], label="True")
                 
                 plt.legend(loc='upper left')
-                plt.savefig("7_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.savefig("../results_new/7_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig7)
 
             if(epoch>100):
@@ -524,7 +527,7 @@ class DA_rnn(nn.Module):
                          self.epoch_losses[range(0,epoch)], label="True")
                 
                 plt.legend(loc='upper left')
-                plt.savefig("8_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.savefig("../results_new/8_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig8)    
 
 
@@ -554,13 +557,13 @@ class DA_rnn(nn.Module):
                             'model_state_dict': self.Encoder.state_dict(),
                             'optimizer_state_dict': self.encoder_optimizer.state_dict(),
                             'loss': loss
-                            },( "../nasdaq/EncoderEpochnew"+str(epoch+epoch_start)+"_23_7.pt"))
+                            },( "../weights_new/EncoderEpochnew"+str(epoch+epoch_start)+"_17_8.pt"))
                 torch.save({
                             'epoch': epoch+epoch_start,
                             'model_state_dict': self.Decoder.state_dict(),
                             'optimizer_state_dict': self.decoder_optimizer.state_dict(),
                             'loss': loss
-                            }, ("../nasdaq/DecoderEpochnew"+str(epoch+epoch_start)+"_23_7.pt"))
+                            }, ("../weights_new/DecoderEpochnew"+str(epoch+epoch_start)+"_17_8.pt"))
                 min_loss= self.epoch_losses[epoch]      
                       
             if (epoch+epoch_start)%50==0 :
@@ -576,7 +579,7 @@ class DA_rnn(nn.Module):
                 plt.plot(range(self.T + len(y_train_pred), len(self.y) + 1),
                          y_test_pred, label='Predicted - Test')
                 plt.legend(loc='upper left')
-                plt.savefig("4_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.savefig("../results_new/4_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig4)
                 
                 plt.ioff()
@@ -587,7 +590,7 @@ class DA_rnn(nn.Module):
                          y_test_pred, label='Predicted - Test')
                
                 plt.legend(loc = 'upper left')
-                plt.savefig("5_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.savefig("../results_new/5_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig5)
                 plt.ioff()
                 fig6 = plt.figure()
@@ -597,9 +600,9 @@ class DA_rnn(nn.Module):
                          y_train_pred, label='Predicted - Train')
                
                 plt.legend(loc = 'upper left')
-                plt.savefig("6_new"+str(epoch+epoch_start)+"_23_7.png")
+                plt.savefig("../results_new/6_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig6)
-                np.savetxt("epoch_loss1_"+str(epoch+epoch_start)+"_23_7.csv",  +self.epoch_losses, delimiter=",")
+                np.savetxt("../results_new/epoch_loss1_"+str(epoch+epoch_start)+"_17_8.csv",  +self.epoch_losses, delimiter=",")
 
 
             # Save files in last iterations
@@ -708,16 +711,16 @@ class DA_rnn(nn.Module):
         return y_pred
 
 
-
+    """
     def evalModel(self,X_pred):
         #test
-        checkpointencoder = torch.load("../nasdaq/EncoderEpochnew450.pt")
+        checkpointencoder = torch.load("../weights_new/EncoderEpochnew450.pt")
         self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
         self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
         epoch_start = checkpointencoder['epoch']
         loss = checkpointencoder['loss']
 
-        checkpointdecoder = torch.load("../nasdaq/DecoderEpochnew450.pt")
+        checkpointdecoder = torch.load("../weights_new/DecoderEpochnew450.pt")
         self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
         self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
         #print("loading checkpoint "+str(epoch_start)+"with loss"+str(loss))
@@ -742,3 +745,4 @@ class DA_rnn(nn.Module):
         #print("X_pred",X_pred)
         val=y_pred[0,0]
         return val
+    """        

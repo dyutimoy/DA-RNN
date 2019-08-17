@@ -66,7 +66,7 @@ def read_extract_data(input_path, debug=False):
             max_valy=y[i]
         
     den_y=max_valy-min_valy    
-    #print(max_valy-min_valy)
+    #Sprint(max_valy-min_valy)
     for i in range(X.shape[0]):
         
         a=(y[i]-min_valy)/den_y
