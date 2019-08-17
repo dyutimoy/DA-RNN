@@ -25,10 +25,10 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from torch.nn.parameter import Parameter
 import math
-
+"""
 from platypus.types import Real
 from platypus.algorithms import NSGAII, SMPSO, OMOPSO
-
+"""
 #Need to change the lstm module 
 #In place use GRy nad specific gates to nature paper 
 #Rest will be same .
