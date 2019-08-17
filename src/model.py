@@ -222,17 +222,9 @@ class Encoder(nn.Module):
         
             #X_new[:, t, :]=torch.mul(delta_x , X_last[:, t, :])
             #"steps"
-            A1=torch.mul(delta_x , X_last[:, t, :])
-            
-            A2= torch.mul((1 - delta_x) , X_mean)
-           
-            
-            A3=torch.mul((1 - mask[:, t, :]),A1+A2)
-            
-            A4=torch.mul(mask[:, t, :],X[:, t, :])
-            
 
-            X_new[:, t, :] = A3+A4
+            X_new[:, t, :] = torch.mul((1 - mask[:, t, :]),torch.mul(delta_x , X_last[:, t, :])+torch.mul((1 - delta_x) , X_mean))+torch.mul(mask[:, t, :],X[:, t, :])
+            
             
                 
         
@@ -510,7 +502,7 @@ class DA_rnn(nn.Module):
 
             self.epoch_test_losses[epoch]=self.test_loss_val
 
-            if(epoch>100):
+            if(epoch>50):
                 plt.ioff()
                 fig7=plt.figure()
                 plt.plot(range(0,epoch ),
@@ -520,7 +512,7 @@ class DA_rnn(nn.Module):
                 plt.savefig("../results_new/7_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig7)
 
-            if(epoch>100):
+            if(epoch>50):
                 plt.ioff()
                 fig8=plt.figure()
                 plt.plot(range(0,epoch ),
@@ -532,7 +524,7 @@ class DA_rnn(nn.Module):
 
 
 
-            if epoch % 10 == 0:
+            if epoch % 2 == 0:
                 print ("Epochs: ", epoch+epoch_start, " Iterations: ", n_iter, " Loss: ", self.epoch_losses[epoch])
             if epoch % 50 == 0 and self.epoch_losses[epoch]<min_loss:
                 print("Model's state_dict:")
@@ -540,7 +532,7 @@ class DA_rnn(nn.Module):
                     print(param_tensor, "\t", self.Encoder.state_dict()[param_tensor].size())
 
                 # Print optimizer's state_dict
-                print("Optimizer's state_dict:")
+                #print("Optimizer's state_dict:")
                 #for var_name in self.encoder_optimizer.state_dict():
                    # print(var_name, "\t",  self.encoder_optimizer.state_dict()[var_name])
 
@@ -549,7 +541,7 @@ class DA_rnn(nn.Module):
                     print(param_tensor, "\t", self.Decoder.state_dict()[param_tensor].size())
 
                 # Print optimizer's state_dict
-                print("Optimizer's state_dict:")
+                #print("Optimizer's state_dict:")
                 #for var_name in self.decoder_optimizer.state_dict():
                   #  print(var_name, "\t",  self.decoder_optimizer.state_dict()[var_name])        
                 torch.save({
@@ -566,7 +558,7 @@ class DA_rnn(nn.Module):
                             }, ("../weights_new/DecoderEpochnew"+str(epoch+epoch_start)+"_17_8.pt"))
                 min_loss= self.epoch_losses[epoch]      
                       
-            if (epoch+epoch_start)%50==0 :
+            if (epoch+epoch_start)%25==0 :
                 y_train_pred = self.test(on_train=True)
                 y_test_pred = self.test(on_train=False)
                 y_pred = np.concatenate((y_train_pred, y_test_pred))

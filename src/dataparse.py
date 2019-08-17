@@ -70,7 +70,6 @@ def read_extract_data(input_path, debug=False):
     for i in range(X.shape[0]):
         
         a=(y[i]-min_valy)/den_y
-        print(a)
         y_norm[i]=float(a)
         #print(y_norm[i])
         
