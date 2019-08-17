@@ -502,7 +502,7 @@ class DA_rnn(nn.Module):
 
             self.epoch_test_losses[epoch]=self.test_loss_val
 
-            if(epoch>50):
+            if(epoch>50 and epoch % 25 == 0):
                 plt.ioff()
                 fig7=plt.figure()
                 plt.plot(range(0,epoch ),
@@ -512,7 +512,7 @@ class DA_rnn(nn.Module):
                 plt.savefig("../results_new/7_new"+str(epoch+epoch_start)+"_17_8.png")
                 plt.close(fig7)
 
-            if(epoch>50):
+            if(epoch>50 and epoch % 25 == 0):
                 plt.ioff()
                 fig8=plt.figure()
                 plt.plot(range(0,epoch ),
