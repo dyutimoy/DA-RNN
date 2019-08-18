@@ -490,11 +490,11 @@ class DA_rnn(nn.Module):
                 idx += self.batch_size
                 n_iter += 1
 
-                if n_iter % 750 == 0 and n_iter != 0:
+                if n_iter % 200 == 0 and n_iter != 0:
                     for param_group in self.encoder_optimizer.param_groups:
-                        param_group['lr'] = param_group['lr'] * 0.9
+                        param_group['lr'] = param_group['lr'] * 0.975
                     for param_group in self.decoder_optimizer.param_groups:
-                        param_group['lr'] = param_group['lr'] * 0.9
+                        param_group['lr'] = param_group['lr'] * 0.975
 
             self.epoch_losses[epoch] = np.mean(self.iter_losses[range(epoch * iter_per_epoch, (epoch + 1) * iter_per_epoch)])
 
