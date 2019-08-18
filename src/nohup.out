@@ -1,0 +1,9 @@
+Namespace(batchsize=128, cuda=False, dataroot='../phone/phoneDatasetFinal.csv', debug=False, epochs=800, lr=0.01, manualSeed=None, name=1708, ngpu=0, nhidden_decoder=128, nhidden_encoder=128, ntimestep=10, resume=True, workers=2)
+Traceback (most recent call last):
+  File "main.py", line 59, in <module>
+    model = DA_rnn(X, y,X_last, opt.ntimestep, opt.nhidden_encoder, opt.nhidden_decoder, opt.batchsize, opt.lr, opt.epochs,opt.resume)
+  File "/home/xeno1897/rnn/DA-RNN/src/model.py", line 406, in __init__
+    T=T)
+  File "/home/xeno1897/rnn/DA-RNN/src/model.py", line 99, in __init__
+    self.identity = torch.eye(input_size).cuda()
+KeyboardInterrupt
