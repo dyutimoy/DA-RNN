@@ -1,0 +1,324 @@
+nohup: ignoring input
+Namespace(batchsize=128, cuda=False, dataroot='../phone/phoneDatasetFinal.csv', debug=False, epochs=500, lr=0.01, manualSeed=None, name=1808, ngpu=0, nhidden_decoder=32, nhidden_encoder=32, ntimestep=10, resume=False, workers=2)
+/home/xeno1897/rnn/DA-RNN/src/model.py:249: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  alpha = F.softmax(x.view(-1, self.input_size))
+/home/xeno1897/rnn/DA-RNN/src/model.py:330: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  x.view(-1, 2 * self.decoder_num_hidden + self.encoder_num_hidden)).view(-1, self.T))
+Epochs:  0  Iterations:  16  Loss:  0.014134637312963605
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  2  Iterations:  48  Loss:  0.012156848737504333
+Epochs:  4  Iterations:  80  Loss:  0.012254625966306776
+Epochs:  6  Iterations:  112  Loss:  0.012420029030181468
+Epochs:  8  Iterations:  144  Loss:  0.012489635613746941
+Epochs:  10  Iterations:  176  Loss:  0.01203329727286473
+Epochs:  12  Iterations:  208  Loss:  0.011403110576793551
+Epochs:  14  Iterations:  240  Loss:  0.011322909238515422
+Epochs:  16  Iterations:  272  Loss:  0.01146191282896325
+Epochs:  18  Iterations:  304  Loss:  0.011380316311260685
+Epochs:  20  Iterations:  336  Loss:  0.011257406760705635
+Epochs:  22  Iterations:  368  Loss:  0.011198343301657587
+Epochs:  24  Iterations:  400  Loss:  0.01116038890904747
+Epochs:  26  Iterations:  432  Loss:  0.011127860489068553
+Epochs:  28  Iterations:  464  Loss:  0.011368201638106257
+Epochs:  30  Iterations:  496  Loss:  0.010847624245798215
+Epochs:  32  Iterations:  528  Loss:  0.010705326800234616
+Epochs:  34  Iterations:  560  Loss:  0.01064177555963397
+Epochs:  36  Iterations:  592  Loss:  0.01058610380277969
+Epochs:  38  Iterations:  624  Loss:  0.010502687422558665
+Epochs:  40  Iterations:  656  Loss:  0.010428627778310329
+Epochs:  42  Iterations:  688  Loss:  0.010256856476189569
+Epochs:  44  Iterations:  720  Loss:  0.010320364701328799
+Epochs:  46  Iterations:  752  Loss:  0.010268541431287304
+Epochs:  48  Iterations:  784  Loss:  0.01022794540040195
+Epochs:  50  Iterations:  816  Loss:  0.010216276918072253
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  52  Iterations:  848  Loss:  0.010148014931473881
+Epochs:  54  Iterations:  880  Loss:  0.010125058237463236
+Epochs:  56  Iterations:  912  Loss:  0.009974190179491416
+Epochs:  58  Iterations:  944  Loss:  0.010103975218953565
+Epochs:  60  Iterations:  976  Loss:  0.010256891866447404
+Epochs:  62  Iterations:  1008  Loss:  0.00994859921047464
+Epochs:  64  Iterations:  1040  Loss:  0.00983939747675322
+Epochs:  66  Iterations:  1072  Loss:  0.009977106150472537
+Epochs:  68  Iterations:  1104  Loss:  0.009870748006505892
+Epochs:  70  Iterations:  1136  Loss:  0.009780278574908152
+Epochs:  72  Iterations:  1168  Loss:  0.009775256185093895
+Epochs:  74  Iterations:  1200  Loss:  0.009704764786874875
+Epochs:  76  Iterations:  1232  Loss:  0.009712386585306376
+Epochs:  78  Iterations:  1264  Loss:  0.009616115072276443
+Epochs:  80  Iterations:  1296  Loss:  0.00952188449446112
+Epochs:  82  Iterations:  1328  Loss:  0.009789514733711258
+Epochs:  84  Iterations:  1360  Loss:  0.010585834126686677
+Epochs:  86  Iterations:  1392  Loss:  0.010556959721725434
+Epochs:  88  Iterations:  1424  Loss:  0.009990879858378321
+Epochs:  90  Iterations:  1456  Loss:  0.009950423613190651
+Epochs:  92  Iterations:  1488  Loss:  0.009773820493137464
+Epochs:  94  Iterations:  1520  Loss:  0.009713830047985539
+Epochs:  96  Iterations:  1552  Loss:  0.009647181315813214
+Epochs:  98  Iterations:  1584  Loss:  0.009607598971342668
+Epochs:  100  Iterations:  1616  Loss:  0.009988494770368561
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  102  Iterations:  1648  Loss:  0.009529303235467523
+Epochs:  104  Iterations:  1680  Loss:  0.00956540266633965
+Epochs:  106  Iterations:  1712  Loss:  0.00939741134061478
+Epochs:  108  Iterations:  1744  Loss:  0.009596658026566729
+Epochs:  110  Iterations:  1776  Loss:  0.009359526564367115
+Epochs:  112  Iterations:  1808  Loss:  0.009575174713972956
+Epochs:  114  Iterations:  1840  Loss:  0.009242013533366844
+Epochs:  116  Iterations:  1872  Loss:  0.009536191762890667
+Epochs:  118  Iterations:  1904  Loss:  0.009330499276984483
+Epochs:  120  Iterations:  1936  Loss:  0.00922636513132602
+Epochs:  122  Iterations:  1968  Loss:  0.009894319315208122
+Epochs:  124  Iterations:  2000  Loss:  0.009147513774223626
+Epochs:  126  Iterations:  2032  Loss:  0.008865135023370385
+Epochs:  128  Iterations:  2064  Loss:  0.008947516791522503
+Epochs:  130  Iterations:  2096  Loss:  0.008960468432633206
+Epochs:  132  Iterations:  2128  Loss:  0.010995865246513858
+Epochs:  134  Iterations:  2160  Loss:  0.010272024286678061
+Epochs:  136  Iterations:  2192  Loss:  0.009844006970524788
+Epochs:  138  Iterations:  2224  Loss:  0.009384873614180833
+Epochs:  140  Iterations:  2256  Loss:  0.009051441040355712
+Epochs:  142  Iterations:  2288  Loss:  0.008786553051322699
+Epochs:  144  Iterations:  2320  Loss:  0.008573920058552176
+Epochs:  146  Iterations:  2352  Loss:  0.008574114210205153
+Epochs:  148  Iterations:  2384  Loss:  0.00906542461598292
+Epochs:  150  Iterations:  2416  Loss:  0.008668666909215972
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  152  Iterations:  2448  Loss:  0.0084980895917397
+Epochs:  154  Iterations:  2480  Loss:  0.010728457826189697
+Epochs:  156  Iterations:  2512  Loss:  0.01032220947672613
+Epochs:  158  Iterations:  2544  Loss:  0.009572625276632607
+Epochs:  160  Iterations:  2576  Loss:  0.00926813276601024
+Epochs:  162  Iterations:  2608  Loss:  0.009212684526573867
+Epochs:  164  Iterations:  2640  Loss:  0.009152109152637422
+Epochs:  166  Iterations:  2672  Loss:  0.008806411875411868
+Epochs:  168  Iterations:  2704  Loss:  0.008588674128986895
+Epochs:  170  Iterations:  2736  Loss:  0.008522806951077655
+Epochs:  172  Iterations:  2768  Loss:  0.008513493230566382
+Epochs:  174  Iterations:  2800  Loss:  0.008238511596573517
+Epochs:  176  Iterations:  2832  Loss:  0.008179108786862344
+Epochs:  178  Iterations:  2864  Loss:  0.008102750696707517
+Epochs:  180  Iterations:  2896  Loss:  0.008315300452522933
+Epochs:  182  Iterations:  2928  Loss:  0.008393186522880569
+Epochs:  184  Iterations:  2960  Loss:  0.008014451261260547
+Epochs:  186  Iterations:  2992  Loss:  0.007926558930194005
+Epochs:  188  Iterations:  3024  Loss:  0.007766635419102386
+Epochs:  190  Iterations:  3056  Loss:  0.007501893560402095
+Epochs:  192  Iterations:  3088  Loss:  0.007621518336236477
+Epochs:  194  Iterations:  3120  Loss:  0.007976589258760214
+Epochs:  196  Iterations:  3152  Loss:  0.007778780913213268
+Epochs:  198  Iterations:  3184  Loss:  0.008105030545266345
+Epochs:  200  Iterations:  3216  Loss:  0.007875744078774005
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  202  Iterations:  3248  Loss:  0.008835279644699767
+Epochs:  204  Iterations:  3280  Loss:  0.007940515206428245
+Epochs:  206  Iterations:  3312  Loss:  0.0075544612627709284
+Epochs:  208  Iterations:  3344  Loss:  0.008206716534914449
+Epochs:  210  Iterations:  3376  Loss:  0.0075342418713262305
+Epochs:  212  Iterations:  3408  Loss:  0.007321937649976462
+Epochs:  214  Iterations:  3440  Loss:  0.007349920517299324
+Epochs:  216  Iterations:  3472  Loss:  0.0071522544749313965
+Epochs:  218  Iterations:  3504  Loss:  0.007439746579620987
+Epochs:  220  Iterations:  3536  Loss:  0.007144752962631173
+Epochs:  222  Iterations:  3568  Loss:  0.0075729921663878486
+Epochs:  224  Iterations:  3600  Loss:  0.0076201594492886215
+Epochs:  226  Iterations:  3632  Loss:  0.00742240714316722
+Epochs:  228  Iterations:  3664  Loss:  0.007606175626278855
+Epochs:  230  Iterations:  3696  Loss:  0.006995705698500387
+Epochs:  232  Iterations:  3728  Loss:  0.007024790174909867
+Epochs:  234  Iterations:  3760  Loss:  0.007369433908024803
+Epochs:  236  Iterations:  3792  Loss:  0.006874540325952694
+Epochs:  238  Iterations:  3824  Loss:  0.009039168449817225
+Epochs:  240  Iterations:  3856  Loss:  0.007454224076354876
+Epochs:  242  Iterations:  3888  Loss:  0.006643848610110581
+Epochs:  244  Iterations:  3920  Loss:  0.00663531559985131
+Epochs:  246  Iterations:  3952  Loss:  0.006077866783016361
+Epochs:  248  Iterations:  3984  Loss:  0.006436889598262496
+Epochs:  250  Iterations:  4016  Loss:  0.006542990333400667
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  252  Iterations:  4048  Loss:  0.0063339347107103094
+Epochs:  254  Iterations:  4080  Loss:  0.006387173605617136
+Epochs:  256  Iterations:  4112  Loss:  0.006426785490475595
+Epochs:  258  Iterations:  4144  Loss:  0.011647687118966132
+Epochs:  260  Iterations:  4176  Loss:  0.011797801678767428
+Epochs:  262  Iterations:  4208  Loss:  0.011534805147675797
+Epochs:  264  Iterations:  4240  Loss:  0.011064293095842004
+Epochs:  266  Iterations:  4272  Loss:  0.010990501032210886
+Epochs:  268  Iterations:  4304  Loss:  0.010907342046266422
+Epochs:  270  Iterations:  4336  Loss:  0.01082960341591388
+Epochs:  272  Iterations:  4368  Loss:  0.010656550439307466
+Epochs:  274  Iterations:  4400  Loss:  0.010556500521488488
+Epochs:  276  Iterations:  4432  Loss:  0.010382042586570606
+Epochs:  278  Iterations:  4464  Loss:  0.010200467891991138
+Epochs:  280  Iterations:  4496  Loss:  0.010082209424581379
+Epochs:  282  Iterations:  4528  Loss:  0.009977532317861915
+Epochs:  284  Iterations:  4560  Loss:  0.009793293313123286
+Epochs:  286  Iterations:  4592  Loss:  0.00972631896729581
+Epochs:  288  Iterations:  4624  Loss:  0.009919821284711361
+Epochs:  290  Iterations:  4656  Loss:  0.009812236443394795
+Epochs:  292  Iterations:  4688  Loss:  0.009719718800624833
+Epochs:  294  Iterations:  4720  Loss:  0.009317128715338185
+Epochs:  296  Iterations:  4752  Loss:  0.009335315349744633
+Epochs:  298  Iterations:  4784  Loss:  0.009310345601988956
+Epochs:  300  Iterations:  4816  Loss:  0.008986043860204518
+Epochs:  302  Iterations:  4848  Loss:  0.008850483485730365
+Epochs:  304  Iterations:  4880  Loss:  0.008536591107258573
+Epochs:  306  Iterations:  4912  Loss:  0.008743072598008439
+Epochs:  308  Iterations:  4944  Loss:  0.008454028400592506
+Epochs:  310  Iterations:  4976  Loss:  0.00859814093564637
+Epochs:  312  Iterations:  5008  Loss:  0.008474644913803786
+Epochs:  314  Iterations:  5040  Loss:  0.010447532520629466
+Epochs:  316  Iterations:  5072  Loss:  0.009514228877378628
+Epochs:  318  Iterations:  5104  Loss:  0.009031759749632329
+Epochs:  320  Iterations:  5136  Loss:  0.008672095573274419
+Epochs:  322  Iterations:  5168  Loss:  0.008598254731623456
