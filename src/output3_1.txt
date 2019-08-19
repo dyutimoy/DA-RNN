@@ -1,0 +1,341 @@
+nohup: ignoring input
+Namespace(batchsize=128, cuda=False, dataroot='../phone/phoneDatasetFinal.csv', debug=False, epochs=1000, lr=0.001, manualSeed=None, name=1908, ngpu=0, nhidden_decoder=32, nhidden_encoder=32, ntimestep=10, resume=True, workers=2)
+loading checkpoint 250with loss0.0037421006709337234
+/home/xeno1897/rnn/DA-RNN/src/model.py:249: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  alpha = F.softmax(x.view(-1, self.input_size))
+/home/xeno1897/rnn/DA-RNN/src/model.py:330: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  x.view(-1, 2 * self.decoder_num_hidden + self.encoder_num_hidden)).view(-1, self.T))
+Epochs:  250  Iterations:  16  Loss:  0.006435765550122596
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([7, 7])
+gamma_x_l.bias 	 torch.Size([7])
+gamma_h_l.weight 	 torch.Size([32, 7])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 7])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  252  Iterations:  48  Loss:  0.006245931828743778
+Epochs:  254  Iterations:  80  Loss:  0.006510425853775814
+Epochs:  256  Iterations:  112  Loss:  0.011549866176210344
+Epochs:  258  Iterations:  144  Loss:  0.011597883305512369
+Epochs:  260  Iterations:  176  Loss:  0.011364417092408985
+Epochs:  262  Iterations:  208  Loss:  0.011128895537694916
+Epochs:  264  Iterations:  240  Loss:  0.010975438519380987
+Epochs:  266  Iterations:  272  Loss:  0.010914184560533613
+Epochs:  268  Iterations:  304  Loss:  0.010780538577819243
+Epochs:  270  Iterations:  336  Loss:  0.010654548474121839
+Epochs:  272  Iterations:  368  Loss:  0.010907868127105758
+Epochs:  274  Iterations:  400  Loss:  0.011019267287338153
+Epochs:  276  Iterations:  432  Loss:  0.010815358284162357
+Epochs:  278  Iterations:  464  Loss:  0.011647756560705602
+Epochs:  280  Iterations:  496  Loss:  0.011172217899002135
+Epochs:  282  Iterations:  528  Loss:  0.010554368316661566
+Epochs:  284  Iterations:  560  Loss:  0.01032572178519331
+Epochs:  286  Iterations:  592  Loss:  0.010264253593049943
+Epochs:  288  Iterations:  624  Loss:  0.010074298887047917
+Epochs:  290  Iterations:  656  Loss:  0.009974469023291022
+Epochs:  292  Iterations:  688  Loss:  0.009881531703285873
+Epochs:  294  Iterations:  720  Loss:  0.00978582026436925
+Epochs:  296  Iterations:  752  Loss:  0.009695456363260746
+Epochs:  298  Iterations:  784  Loss:  0.009618355252314359
+Epochs:  300  Iterations:  816  Loss:  0.009665642835898325
+Epochs:  302  Iterations:  848  Loss:  0.009566439839545637
+Epochs:  304  Iterations:  880  Loss:  0.009553399024298415
+Epochs:  306  Iterations:  912  Loss:  0.009424888994544744
+Epochs:  308  Iterations:  944  Loss:  0.009245259192539379
+Epochs:  310  Iterations:  976  Loss:  0.010390939918579534
+Epochs:  312  Iterations:  1008  Loss:  0.009985902230255306
+Epochs:  314  Iterations:  1040  Loss:  0.009541260631522164
+Epochs:  316  Iterations:  1072  Loss:  0.009206781309330836
+Epochs:  318  Iterations:  1104  Loss:  0.009066408849321306
+Epochs:  320  Iterations:  1136  Loss:  0.009119898051721975
+Epochs:  322  Iterations:  1168  Loss:  0.008836636669002473
+Epochs:  324  Iterations:  1200  Loss:  0.008600324246799573
+Epochs:  326  Iterations:  1232  Loss:  0.009189999254886061
+Epochs:  328  Iterations:  1264  Loss:  0.008858726330799982
+Epochs:  330  Iterations:  1296  Loss:  0.008524093340383843
+Epochs:  332  Iterations:  1328  Loss:  0.008317866158904508
+Epochs:  334  Iterations:  1360  Loss:  0.008246445882832631
+Epochs:  336  Iterations:  1392  Loss:  0.008097661659121513
+Epochs:  338  Iterations:  1424  Loss:  0.007971027807798237
+Epochs:  340  Iterations:  1456  Loss:  0.008038337022298947
+Epochs:  342  Iterations:  1488  Loss:  0.01036753031075932
+Epochs:  344  Iterations:  1520  Loss:  0.011512348923133686
+Epochs:  346  Iterations:  1552  Loss:  0.010938345250906423
+Epochs:  348  Iterations:  1584  Loss:  0.010877875029109418
+Epochs:  350  Iterations:  1616  Loss:  0.010616316605592147
+Epochs:  352  Iterations:  1648  Loss:  0.01042856156709604
+Epochs:  354  Iterations:  1680  Loss:  0.010254464606987312
+Epochs:  356  Iterations:  1712  Loss:  0.010103625478222966
+Epochs:  358  Iterations:  1744  Loss:  0.009945693309418857
+Epochs:  360  Iterations:  1776  Loss:  0.009842239174759015
+Epochs:  362  Iterations:  1808  Loss:  0.009748403477715328
+Epochs:  364  Iterations:  1840  Loss:  0.009695585758890957
+Epochs:  366  Iterations:  1872  Loss:  0.00967427113209851
+Epochs:  368  Iterations:  1904  Loss:  0.011552173731615767
+Epochs:  370  Iterations:  1936  Loss:  0.012027422548271716
+Epochs:  372  Iterations:  1968  Loss:  0.011474085418740287
+Epochs:  374  Iterations:  2000  Loss:  0.011181229347130284
+Epochs:  376  Iterations:  2032  Loss:  0.010996289958711714
+Epochs:  378  Iterations:  2064  Loss:  0.01101944426773116
+Epochs:  380  Iterations:  2096  Loss:  0.01092098094522953
+Epochs:  382  Iterations:  2128  Loss:  0.01078709278954193
+Epochs:  384  Iterations:  2160  Loss:  0.010670290648704395
+Epochs:  386  Iterations:  2192  Loss:  0.010580101457890123
+Epochs:  388  Iterations:  2224  Loss:  0.010518174938624725
+Epochs:  390  Iterations:  2256  Loss:  0.010476510622538626
+Epochs:  392  Iterations:  2288  Loss:  0.01045522268395871
+Epochs:  394  Iterations:  2320  Loss:  0.010769924701889977
+Epochs:  396  Iterations:  2352  Loss:  0.010641176806529984
+Epochs:  398  Iterations:  2384  Loss:  0.01057073031552136
+Epochs:  400  Iterations:  2416  Loss:  0.010481350938789546
+Epochs:  402  Iterations:  2448  Loss:  0.010434506926685572
+Epochs:  404  Iterations:  2480  Loss:  0.010855841770535335
+Epochs:  406  Iterations:  2512  Loss:  0.010898077074671164
+Epochs:  408  Iterations:  2544  Loss:  0.010826805781107396
+Epochs:  410  Iterations:  2576  Loss:  0.010775394621305168
+Epochs:  412  Iterations:  2608  Loss:  0.010892943275393918
+Epochs:  414  Iterations:  2640  Loss:  0.010967682406771928
+Epochs:  416  Iterations:  2672  Loss:  0.010881927912123501
+Epochs:  418  Iterations:  2704  Loss:  0.010870242840610445
+Epochs:  420  Iterations:  2736  Loss:  0.010741137637523934
+Epochs:  422  Iterations:  2768  Loss:  0.010721231024945155
+Epochs:  424  Iterations:  2800  Loss:  0.010653501667547971
+Epochs:  426  Iterations:  2832  Loss:  0.01057807559845969
+Epochs:  428  Iterations:  2864  Loss:  0.010531440930208191
+Epochs:  430  Iterations:  2896  Loss:  0.0105104630056303
+Epochs:  432  Iterations:  2928  Loss:  0.010466567211551592
+Epochs:  434  Iterations:  2960  Loss:  0.010520458134124056
+Epochs:  436  Iterations:  2992  Loss:  0.0106937303498853
+Epochs:  438  Iterations:  3024  Loss:  0.010623487323755398
+Epochs:  440  Iterations:  3056  Loss:  0.010864153649890795
+Epochs:  442  Iterations:  3088  Loss:  0.01084231017739512
+Epochs:  444  Iterations:  3120  Loss:  0.010650647687725723
+Epochs:  446  Iterations:  3152  Loss:  0.01058295794064179
+Epochs:  448  Iterations:  3184  Loss:  0.010419154015835375
+Epochs:  450  Iterations:  3216  Loss:  0.010370956471888348
+Epochs:  452  Iterations:  3248  Loss:  0.010327637370210141
+Epochs:  454  Iterations:  3280  Loss:  0.010215811053058133
+Epochs:  456  Iterations:  3312  Loss:  0.010281690862029791
+Epochs:  458  Iterations:  3344  Loss:  0.010713824682170525
+Epochs:  460  Iterations:  3376  Loss:  0.01061801312607713
+Epochs:  462  Iterations:  3408  Loss:  0.010600188106764108
+Epochs:  464  Iterations:  3440  Loss:  0.010499549942323938
+Epochs:  466  Iterations:  3472  Loss:  0.010200461430940777
+Epochs:  468  Iterations:  3504  Loss:  0.010437791817821562
+Epochs:  470  Iterations:  3536  Loss:  0.01027753102243878
+Epochs:  472  Iterations:  3568  Loss:  0.01027448388049379
+Epochs:  474  Iterations:  3600  Loss:  0.010163649480091408
+Epochs:  476  Iterations:  3632  Loss:  0.010291941202012822
+Epochs:  478  Iterations:  3664  Loss:  0.010004971147282049
+Epochs:  480  Iterations:  3696  Loss:  0.010357133811339736
+Epochs:  482  Iterations:  3728  Loss:  0.009941379015799612
+Epochs:  484  Iterations:  3760  Loss:  0.01053867579321377
+Epochs:  486  Iterations:  3792  Loss:  0.01004533946979791
+Epochs:  488  Iterations:  3824  Loss:  0.010079141560709104
+Epochs:  490  Iterations:  3856  Loss:  0.009981882525607944
+Epochs:  492  Iterations:  3888  Loss:  0.010104111366672441
+Epochs:  494  Iterations:  3920  Loss:  0.010045200149761513
+Epochs:  496  Iterations:  3952  Loss:  0.01018765161279589
+Epochs:  498  Iterations:  3984  Loss:  0.01018341412418522
+Epochs:  500  Iterations:  4016  Loss:  0.010178740747505799
+Epochs:  502  Iterations:  4048  Loss:  0.009978635527659208
+Epochs:  504  Iterations:  4080  Loss:  0.009655179514084011
+Epochs:  506  Iterations:  4112  Loss:  0.00965018878923729
+Epochs:  508  Iterations:  4144  Loss:  0.009556353063089773
+Epochs:  510  Iterations:  4176  Loss:  0.009460079396376386
+Epochs:  512  Iterations:  4208  Loss:  0.009451247344259173
+Epochs:  514  Iterations:  4240  Loss:  0.009420579590369016
+Epochs:  516  Iterations:  4272  Loss:  0.009278259734855965
+Epochs:  518  Iterations:  4304  Loss:  0.009338202013168484
+Epochs:  520  Iterations:  4336  Loss:  0.009323571430286393
+Epochs:  522  Iterations:  4368  Loss:  0.009255104174371809
+Epochs:  524  Iterations:  4400  Loss:  0.00917655843659304
+Epochs:  526  Iterations:  4432  Loss:  0.009306054416811094
+Epochs:  528  Iterations:  4464  Loss:  0.009048223990248516
+Epochs:  530  Iterations:  4496  Loss:  0.009086367266718298
+Epochs:  532  Iterations:  4528  Loss:  0.008943516644649208
+Epochs:  534  Iterations:  4560  Loss:  0.009022251208079979
+Epochs:  536  Iterations:  4592  Loss:  0.009215507685439661
+Epochs:  538  Iterations:  4624  Loss:  0.008896054758224636
+Epochs:  540  Iterations:  4656  Loss:  0.009116787899984047
+Epochs:  542  Iterations:  4688  Loss:  0.008822121861157939
+Epochs:  544  Iterations:  4720  Loss:  0.008928389725042507
+Epochs:  546  Iterations:  4752  Loss:  0.008639005187433213
+Epochs:  548  Iterations:  4784  Loss:  0.010849359910935163
+Epochs:  550  Iterations:  4816  Loss:  0.010174430353799835
+Epochs:  552  Iterations:  4848  Loss:  0.009689075784990564
+Epochs:  554  Iterations:  4880  Loss:  0.01042999149649404
+Epochs:  556  Iterations:  4912  Loss:  0.009825135522987694
+Epochs:  558  Iterations:  4944  Loss:  0.01037011039443314
+Epochs:  560  Iterations:  4976  Loss:  0.009776932332897559
+Epochs:  562  Iterations:  5008  Loss:  0.009552185802021995
+Epochs:  564  Iterations:  5040  Loss:  0.009311227244324982
+Epochs:  566  Iterations:  5072  Loss:  0.00919392122887075
+Epochs:  568  Iterations:  5104  Loss:  0.009017099888296798
+Epochs:  570  Iterations:  5136  Loss:  0.008923258865252137
+Epochs:  572  Iterations:  5168  Loss:  0.00880155444610864
+Epochs:  574  Iterations:  5200  Loss:  0.008909959607990459
+Epochs:  576  Iterations:  5232  Loss:  0.008775545051321387
+Epochs:  578  Iterations:  5264  Loss:  0.008876871957909316
+Epochs:  580  Iterations:  5296  Loss:  0.009035989351104945
+Epochs:  582  Iterations:  5328  Loss:  0.00907216896302998
+Epochs:  584  Iterations:  5360  Loss:  0.008626985567389056
+Epochs:  586  Iterations:  5392  Loss:  0.008546044380636886
+Epochs:  588  Iterations:  5424  Loss:  0.008434010582277551
+Epochs:  590  Iterations:  5456  Loss:  0.008443014899967238
+Epochs:  592  Iterations:  5488  Loss:  0.008426642045378685
+Epochs:  594  Iterations:  5520  Loss:  0.00840480363694951
+Epochs:  596  Iterations:  5552  Loss:  0.008489871019264683
+Epochs:  598  Iterations:  5584  Loss:  0.008553071558708325
+Epochs:  600  Iterations:  5616  Loss:  0.008028368320083246
+Epochs:  602  Iterations:  5648  Loss:  0.008206346625229344
+Epochs:  604  Iterations:  5680  Loss:  0.00809616147307679
+Epochs:  606  Iterations:  5712  Loss:  0.008084841654635966
+Epochs:  608  Iterations:  5744  Loss:  0.008133854455081746
+Epochs:  610  Iterations:  5776  Loss:  0.008211313310312107
+Epochs:  612  Iterations:  5808  Loss:  0.008211940701585263
+Epochs:  614  Iterations:  5840  Loss:  0.00819762036553584
+Epochs:  616  Iterations:  5872  Loss:  0.00835163239389658
+Epochs:  618  Iterations:  5904  Loss:  0.007632882450707257
+Epochs:  620  Iterations:  5936  Loss:  0.00785812214598991
+Epochs:  622  Iterations:  5968  Loss:  0.00788709256448783
+Epochs:  624  Iterations:  6000  Loss:  0.008220563788199797
+Epochs:  626  Iterations:  6032  Loss:  0.008090484800050035
+Epochs:  628  Iterations:  6064  Loss:  0.0076275554893072695
+Epochs:  630  Iterations:  6096  Loss:  0.008066090347710997
+Epochs:  632  Iterations:  6128  Loss:  0.007811318646417931
+Epochs:  634  Iterations:  6160  Loss:  0.007648835104191676
+Epochs:  636  Iterations:  6192  Loss:  0.0078398646437563
+Epochs:  638  Iterations:  6224  Loss:  0.007621630153153092
+Epochs:  640  Iterations:  6256  Loss:  0.007399835041724145
+Epochs:  642  Iterations:  6288  Loss:  0.007442688423907384
+Epochs:  644  Iterations:  6320  Loss:  0.010246593446936458
+Epochs:  646  Iterations:  6352  Loss:  0.009529070288408548
+Epochs:  648  Iterations:  6384  Loss:  0.008619751111837104
+Epochs:  650  Iterations:  6416  Loss:  0.008678242505993694
+Epochs:  652  Iterations:  6448  Loss:  0.008153322589350864
+Epochs:  654  Iterations:  6480  Loss:  0.007643555349204689
+Epochs:  656  Iterations:  6512  Loss:  0.007793558674165979
+Epochs:  658  Iterations:  6544  Loss:  0.007442396745318547
+Epochs:  660  Iterations:  6576  Loss:  0.007749130978481844
+Epochs:  662  Iterations:  6608  Loss:  0.007974802312674
+Epochs:  664  Iterations:  6640  Loss:  0.0074715965311042964
+Epochs:  666  Iterations:  6672  Loss:  0.007305859326152131
+Epochs:  668  Iterations:  6704  Loss:  0.007407965749735013
+Epochs:  670  Iterations:  6736  Loss:  0.007444971415679902
+Epochs:  672  Iterations:  6768  Loss:  0.0071673732018098235
+Epochs:  674  Iterations:  6800  Loss:  0.007080310373567045
+Epochs:  676  Iterations:  6832  Loss:  0.006866095180157572
+Epochs:  678  Iterations:  6864  Loss:  0.008233340573497117
+Epochs:  680  Iterations:  6896  Loss:  0.008372934244107455
+Epochs:  682  Iterations:  6928  Loss:  0.010676214675186202
+Epochs:  684  Iterations:  6960  Loss:  0.00957567902514711
+Epochs:  686  Iterations:  6992  Loss:  0.00831761592417024
+Epochs:  688  Iterations:  7024  Loss:  0.007195297395810485
+Epochs:  690  Iterations:  7056  Loss:  0.007071531901601702
+Epochs:  692  Iterations:  7088  Loss:  0.0073324263212271035
+Epochs:  694  Iterations:  7120  Loss:  0.006890202348586172
+Epochs:  696  Iterations:  7152  Loss:  0.006980499078053981
+Epochs:  698  Iterations:  7184  Loss:  0.0069824229285586625
+Epochs:  700  Iterations:  7216  Loss:  0.007217253762064502
+Epochs:  702  Iterations:  7248  Loss:  0.006944210996152833
+Epochs:  704  Iterations:  7280  Loss:  0.006839109060820192
+Epochs:  706  Iterations:  7312  Loss:  0.0066716532746795565
+Epochs:  708  Iterations:  7344  Loss:  0.007423539325827733
+Epochs:  710  Iterations:  7376  Loss:  0.007400397444143891
+Epochs:  712  Iterations:  7408  Loss:  0.006864443450467661
+Epochs:  714  Iterations:  7440  Loss:  0.0069839902280364186
+Epochs:  716  Iterations:  7472  Loss:  0.007483233348466456
+Epochs:  718  Iterations:  7504  Loss:  0.007018956384854391
+Epochs:  720  Iterations:  7536  Loss:  0.006752028304617852
+Epochs:  722  Iterations:  7568  Loss:  0.006593708822038025
+Epochs:  724  Iterations:  7600  Loss:  0.007071406958857551
+Epochs:  726  Iterations:  7632  Loss:  0.006933258060598746
+Epochs:  728  Iterations:  7664  Loss:  0.006982904014876112
+Epochs:  730  Iterations:  7696  Loss:  0.006782270938856527
+Epochs:  732  Iterations:  7728  Loss:  0.006901179876876995
+Epochs:  734  Iterations:  7760  Loss:  0.006436075724195689
+Epochs:  736  Iterations:  7792  Loss:  0.006365195993566886
+Epochs:  738  Iterations:  7824  Loss:  0.006284176488406956
+Epochs:  740  Iterations:  7856  Loss:  0.006162114004837349
+Epochs:  742  Iterations:  7888  Loss:  0.006037279628799297
+Epochs:  744  Iterations:  7920  Loss:  0.005950453269178979
+Epochs:  746  Iterations:  7952  Loss:  0.005706825715606101
+Epochs:  748  Iterations:  7984  Loss:  0.0064567238732706755
+Epochs:  750  Iterations:  8016  Loss:  0.006774742010748014
+Epochs:  752  Iterations:  8048  Loss:  0.006346394831780344
+Epochs:  754  Iterations:  8080  Loss:  0.006039776868419722
+Epochs:  756  Iterations:  8112  Loss:  0.009630226879380643
+Epochs:  758  Iterations:  8144  Loss:  0.011073690082412213
+Epochs:  760  Iterations:  8176  Loss:  0.010695611737901345
+Epochs:  762  Iterations:  8208  Loss:  0.010403144173324108
+Epochs:  764  Iterations:  8240  Loss:  0.010210885404376313
+Epochs:  766  Iterations:  8272  Loss:  0.010060266708023846
+Epochs:  768  Iterations:  8304  Loss:  0.009956564608728513
+Epochs:  770  Iterations:  8336  Loss:  0.009854898817138746
+Epochs:  772  Iterations:  8368  Loss:  0.009822443389566615
+Epochs:  774  Iterations:  8400  Loss:  0.00966482498915866
+Epochs:  776  Iterations:  8432  Loss:  0.009524570836219937
+Epochs:  778  Iterations:  8464  Loss:  0.009462074609473348
+Epochs:  780  Iterations:  8496  Loss:  0.009558651188854128
+Epochs:  782  Iterations:  8528  Loss:  0.009429190191440284
+Epochs:  784  Iterations:  8560  Loss:  0.009404952812474221
+Epochs:  786  Iterations:  8592  Loss:  0.009143640869297087
+Epochs:  788  Iterations:  8624  Loss:  0.009289536945289001
+Epochs:  790  Iterations:  8656  Loss:  0.009017979726195335
+Epochs:  792  Iterations:  8688  Loss:  0.009054749389179051
+Epochs:  794  Iterations:  8720  Loss:  0.009145988209638745
+Epochs:  796  Iterations:  8752  Loss:  0.00913929648231715
+Epochs:  798  Iterations:  8784  Loss:  0.00885201181517914
+Epochs:  800  Iterations:  8816  Loss:  0.009613825910491869
+Epochs:  802  Iterations:  8848  Loss:  0.008954379765782505
+Epochs:  804  Iterations:  8880  Loss:  0.009005388885270804
+Epochs:  806  Iterations:  8912  Loss:  0.008791292260866612
+Epochs:  808  Iterations:  8944  Loss:  0.008893087855540216
+Epochs:  810  Iterations:  8976  Loss:  0.009846641070907936
+Epochs:  812  Iterations:  9008  Loss:  0.00923079636413604
+Epochs:  814  Iterations:  9040  Loss:  0.008904979040380567
+Epochs:  816  Iterations:  9072  Loss:  0.009273782197851688
+Epochs:  818  Iterations:  9104  Loss:  0.008659385930513963
+Epochs:  820  Iterations:  9136  Loss:  0.008692673873156309
+Epochs:  822  Iterations:  9168  Loss:  0.008835302432999015
+Epochs:  824  Iterations:  9200  Loss:  0.008564466697862372
+Epochs:  826  Iterations:  9232  Loss:  0.008778763236477971
+Epochs:  828  Iterations:  9264  Loss:  0.008934192184824497
+Epochs:  830  Iterations:  9296  Loss:  0.008410823065787554
+Epochs:  832  Iterations:  9328  Loss:  0.008064447261858732
+Epochs:  834  Iterations:  9360  Loss:  0.008307790529215708
+Epochs:  836  Iterations:  9392  Loss:  0.008418725861702114
+Epochs:  838  Iterations:  9424  Loss:  0.009169420780381188
+Epochs:  840  Iterations:  9456  Loss:  0.008532184961950406
+Epochs:  842  Iterations:  9488  Loss:  0.008333450299687684
+Epochs:  844  Iterations:  9520  Loss:  0.007637035567313433
+Epochs:  846  Iterations:  9552  Loss:  0.007782699569361284
+Epochs:  848  Iterations:  9584  Loss:  0.0076846962329000235
+Epochs:  850  Iterations:  9616  Loss:  0.007942417578306049
+Epochs:  852  Iterations:  9648  Loss:  0.008062186447205022
+Epochs:  854  Iterations:  9680  Loss:  0.007747666852083057
+Epochs:  856  Iterations:  9712  Loss:  0.007519920676713809
+Epochs:  858  Iterations:  9744  Loss:  0.007697168184677139
+Epochs:  860  Iterations:  9776  Loss:  0.008285278076073155
+Epochs:  862  Iterations:  9808  Loss:  0.008155157440342009
+Epochs:  864  Iterations:  9840  Loss:  0.007866865926189348
