@@ -392,7 +392,7 @@ class DA_rnn(nn.Module):
         self.learning_rate = learning_rate
         self.batch_size = batch_size
         self.parallel = parallel
-        self.shuffle = False
+        self.shuffle = True
         self.epochs = epochs
         self.T = T                       #time intreval default 10
         self.X = X
