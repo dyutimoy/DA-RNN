@@ -432,13 +432,13 @@ class DA_rnn(nn.Module):
         
         if(self.resume==True):
                 
-                checkpointencoder = torch.load("../weights_new/EncoderEpochnew"+"250"+"_17_8.pt")
+                checkpointencoder = torch.load("../weights_new/EncoderEpochnew"+"50"+"_17_8.pt")
                 self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
                 self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
                 epoch_start = checkpointencoder['epoch']
                 loss = checkpointencoder['loss']
 
-                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew"+"250"+"_17_8.pt")
+                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew"+"50"+"_17_8.pt")
                 self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
                 self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
                 print("loading checkpoint "+str(epoch_start)+"with loss"+str(loss))
@@ -490,11 +490,11 @@ class DA_rnn(nn.Module):
                 idx += self.batch_size
                 n_iter += 1
 
-                if n_iter % 200 == 0 and n_iter != 0:
+                if n_iter % 750 == 0 and n_iter != 0:
                     for param_group in self.encoder_optimizer.param_groups:
-                        param_group['lr'] = param_group['lr'] * 0.975
+                        param_group['lr'] = param_group['lr'] * 0.9
                     for param_group in self.decoder_optimizer.param_groups:
-                        param_group['lr'] = param_group['lr'] * 0.975
+                        param_group['lr'] = param_group['lr'] * 0.9
 
             self.epoch_losses[epoch] = np.mean(self.iter_losses[range(epoch * iter_per_epoch, (epoch + 1) * iter_per_epoch)])
 
@@ -509,7 +509,7 @@ class DA_rnn(nn.Module):
                          self.epoch_test_losses[range(0,epoch)], label="True")
                 
                 plt.legend(loc='upper left')
-                plt.savefig("../results_new/7_new"+str(epoch+epoch_start)+"_17_8.png")
+                plt.savefig("../results_new/7_new"+str(epoch+epoch_start)+"_20_8.png")
                 plt.close(fig7)
 
             if(epoch>50 and epoch % 25 == 0):
@@ -519,7 +519,7 @@ class DA_rnn(nn.Module):
                          self.epoch_losses[range(0,epoch)], label="True")
                 
                 plt.legend(loc='upper left')
-                plt.savefig("../results_new/8_new"+str(epoch+epoch_start)+"_17_8.png")
+                plt.savefig("../results_new/8_new"+str(epoch+epoch_start)+"_20_8.png")
                 plt.close(fig8)    
 
 
@@ -549,13 +549,13 @@ class DA_rnn(nn.Module):
                             'model_state_dict': self.Encoder.state_dict(),
                             'optimizer_state_dict': self.encoder_optimizer.state_dict(),
                             'loss': loss
-                            },( "../weights_new/EncoderEpochnew"+str(epoch+epoch_start)+"_17_8.pt"))
+                            },( "../weights_new/EncoderEpochnew"+str(epoch+epoch_start)+"_20_8.pt"))
                 torch.save({
                             'epoch': epoch+epoch_start,
                             'model_state_dict': self.Decoder.state_dict(),
                             'optimizer_state_dict': self.decoder_optimizer.state_dict(),
                             'loss': loss
-                            }, ("../weights_new/DecoderEpochnew"+str(epoch+epoch_start)+"_17_8.pt"))
+                            }, ("../weights_new/DecoderEpochnew"+str(epoch+epoch_start)+"_20_8.pt"))
                 min_loss= self.epoch_losses[epoch]      
                       
             if (epoch+epoch_start)%25==0 :
@@ -571,7 +571,7 @@ class DA_rnn(nn.Module):
                 plt.plot(range(self.T + len(y_train_pred), len(self.y) + 1),
                          y_test_pred, label='Predicted - Test')
                 plt.legend(loc='upper left')
-                plt.savefig("../results_new/4_new"+str(epoch+epoch_start)+"_17_8.png")
+                plt.savefig("../results_new/4_new"+str(epoch+epoch_start)+"_20_8.png")
                 plt.close(fig4)
                 
                 plt.ioff()
@@ -582,7 +582,7 @@ class DA_rnn(nn.Module):
                          y_test_pred, label='Predicted - Test')
                
                 plt.legend(loc = 'upper left')
-                plt.savefig("../results_new/5_new"+str(epoch+epoch_start)+"_17_8.png")
+                plt.savefig("../results_new/5_new"+str(epoch+epoch_start)+"_20_8.png")
                 plt.close(fig5)
                 plt.ioff()
                 fig6 = plt.figure()
@@ -592,9 +592,9 @@ class DA_rnn(nn.Module):
                          y_train_pred, label='Predicted - Train')
                
                 plt.legend(loc = 'upper left')
-                plt.savefig("../results_new/6_new"+str(epoch+epoch_start)+"_17_8.png")
+                plt.savefig("../results_new/6_new"+str(epoch+epoch_start)+"_20_8.png")
                 plt.close(fig6)
-                np.savetxt("../results_new/epoch_loss1_"+str(epoch+epoch_start)+"_17_8.csv",  +self.epoch_losses, delimiter=",")
+                np.savetxt("../results_new/epoch_loss1_"+str(epoch+epoch_start)+"_20_8.csv",  +self.epoch_losses, delimiter=",")
 
 
             # Save files in last iterations
