@@ -106,7 +106,7 @@ class Encoder(nn.Module):
 
         # Fig 1. Temporal Attention Mechanism: Encoder is LSTM
         self.encoder_lstm = nn.LSTM(
-            input_size=self.input_size, hidden_size=self.encoder_num_hidden)
+            input_size=self.input_size, hidden_size=self.encoder_num_hidden,dropout=0.2)
 
         # Construct Input Attention Mechanism via deterministic attention model
         # Eq. 8: W_e[h_{t-1}; s_{t-1}] + U_e * x^k
@@ -307,7 +307,7 @@ class Decoder(nn.Module):
                                         nn.Tanh(),
                                         nn.Linear(encoder_num_hidden, 1))
         self.lstm_layer = nn.LSTM(
-            input_size=1, hidden_size=decoder_num_hidden)
+            input_size=1, hidden_size=decoder_num_hidden,dropout=0.2)
         self.fc = nn.Linear(encoder_num_hidden + 1, 1)
         self.fc_final1 = nn.Linear(decoder_num_hidden + encoder_num_hidden, decoder_num_hidden)
         self.fc_final2=nn.Linear(decoder_num_hidden , 1)
@@ -417,10 +417,10 @@ class DA_rnn(nn.Module):
 
         self.encoder_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad,
                                                           self.Encoder.parameters()),
-                                            lr=self.learning_rate)
+                                            lr=self.learning_rate,weight_decay=1e-3)
         self.decoder_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad,
                                                           self.Decoder.parameters()),
-                                            lr=self.learning_rate)
+                                            lr=self.learning_rate,weight_decay=1e-3)
 
         # Training set
         self.train_timesteps = int(self.X.shape[0] * 0.7)
