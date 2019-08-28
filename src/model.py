@@ -417,10 +417,10 @@ class DA_rnn(nn.Module):
 
         self.encoder_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad,
                                                           self.Encoder.parameters()),
-                                            lr=self.learning_rate,weight_decay=1e-3)
+                                            lr=self.learning_rate,weight_decay=1e-5)
         self.decoder_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad,
                                                           self.Decoder.parameters()),
-                                            lr=self.learning_rate,weight_decay=1e-3)
+                                            lr=self.learning_rate,weight_decay=1e-5)
 
         # Training set
         self.train_timesteps = int(self.X.shape[0] * 0.7)
