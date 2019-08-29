@@ -417,10 +417,10 @@ class DA_rnn(nn.Module):
 
         self.encoder_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad,
                                                           self.Encoder.parameters()),
-                                            lr=self.learning_rate,weight_decay=1e-5)
+                                            lr=self.learning_rate,weight_decay=0)
         self.decoder_optimizer = optim.Adam(params=filter(lambda p: p.requires_grad,
                                                           self.Decoder.parameters()),
-                                            lr=self.learning_rate,weight_decay=1e-5)
+                                            lr=self.learning_rate,weight_decay=0)
 
         # Training set
         self.train_timesteps = int(self.X.shape[0] * 0.7)
@@ -703,16 +703,15 @@ class DA_rnn(nn.Module):
         return y_pred
 
 
-    """
     def evalModel(self,X_pred):
         #test
-        checkpointencoder = torch.load("../weights_new/EncoderEpochnew450.pt")
+        checkpointencoder = torch.load("../weights_new/EncoderEpochnew700_17_8.pt")
         self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
         self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
         epoch_start = checkpointencoder['epoch']
         loss = checkpointencoder['loss']
 
-        checkpointdecoder = torch.load("../weights_new/DecoderEpochnew450.pt")
+        checkpointdecoder = torch.load("../weights_new/DecoderEpochnew700_17_8.pt")
         self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
         self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
         #print("loading checkpoint "+str(epoch_start)+"with loss"+str(loss))
@@ -737,4 +736,4 @@ class DA_rnn(nn.Module):
         #print("X_pred",X_pred)
         val=y_pred[0,0]
         return val
-    """        
+      
