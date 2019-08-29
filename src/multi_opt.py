@@ -75,7 +75,6 @@ def mobile_phone(vars):
     x5=vars[4]
     x6=vars[5]    
     x7=vars[6]
-    x_input=np.array([x1,x2,x3,x4,x5,x6,x7])
     min1=0
     min2=1.5
     min3=50
@@ -91,8 +90,9 @@ def mobile_phone(vars):
     max5=9.7
     max6=24
     max7=64
+    x_input=np.array([(x1-min1)/(max1-min1),(x2-min2)/(max2-min2),(x3-min3)/(max3-min3),(x4-min4)/(max4-min4),(x5-min5)/(max5-min5),(x6-min6)/(max6-min6),(x7-min7)/(max7-min7)])
     val=model.evalModel(x_input)
-    print(val,x_input)
+    #print(val,x_input)
     return [val,((max1-x1)/(max1-min1))+((max2-x2)/(max2-min2))+((max3-x3)/(max3-min3))+((max4-x4)/(max4-min4))+((max5-x5)/(max5-min5))+((max6-x6)/(max6-min6))+((max7-x7)/(max7-min7))]
     
 
@@ -104,19 +104,41 @@ problem1.function=mobile_phone
 #algorithm1=NSGAII(problem1)
 #algorithm2=SMPSO(problem1)
 
-algorithm3=OMOPSO(problem1,epsilons=0.05)
+algorithm1=OMOPSO(problem1,0.0075)
+algorithm2=SMPSO(problem1)
+algorithm3=NSGAII(problem1)
 
 #algorithm1.run(2)
 #algorithm2.run(2)
 
-algorithm3.run(50)
+algorithm1.run(20)
+algorithm2.run(20)
+algorithm3.run(20)
 
 #for solution in algorithm1.result:
 #    print(solution.objectives)
-    
+   
+print("NSGAII")
+s=0
 for solution in algorithm3.result:
     print(solution.objectives)
-    
+    s+=1
+    print(s)
+   
+print("SMPSO")
+s=0
+for solution in algorithm2.result:
+    print(solution.objectives)
+    s+=1
+    print(s)
+   
+print("MOPSO")
+s=0
+for solution in algorithm1.result:
+    print(solution.objectives)
+    s+=1
+    print(s)
+
 #for solution in algorithm3.result:
 #  print(solution.objectives)
 
