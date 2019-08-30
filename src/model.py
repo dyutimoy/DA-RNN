@@ -724,16 +724,16 @@ class DA_rnn(nn.Module):
         X_last=np.zeros((1, self.T , self.X.shape[1]))
         y_history = np.zeros((1, self.T - 1))     
             
-        X[0, 0:self.T-1, :] = self.X[range(int(self.X.shape[0]) - self.T+1, int(self.X.shape[0])), :]
-        X_last[0,0:self.T-1,:]=self.X_last[range(int(self.X.shape[0]) - self.T+1, int(self.X.shape[0])), :]
-        y_history[0, :] = self.y[range(int(self.X.shape[0]) - self.T+1, int(self.X.shape[0]))]
+        X[0, 0:self.T-1, :] = self.X[range(int(self.X.shape[0]) - self.T-100, int(self.X.shape[0]-101)), :]
+        X_last[0,0:self.T-1,:]=self.X_last[range(int(self.X.shape[0]) - self.T-100, int(self.X.shape[0]-101)), :]
+        y_history[0, :] = self.y[range(int(self.X.shape[0]) - self.T-100, int(self.X.shape[0])-101)]
         X[0, self.T-1, :]=X_pred
         X_last[0, self.T-1,:]=X_pred
         y_history = Variable(torch.from_numpy(y_history).type(torch.FloatTensor)).cuda()
         _, input_encoded = self.Encoder(Variable(torch.from_numpy(X).type(torch.FloatTensor)).cuda(),Variable(torch.from_numpy(X_last).type(torch.FloatTensor)).cuda())
         y_pred = self.Decoder(input_encoded, y_history).cpu().data.numpy()
-        #print("y_pred",y_pred)
-        #print("X_pred",X_pred)
+        print("y",y_history)
+        print("X",X)
         val=y_pred[0,0]
         return val
       

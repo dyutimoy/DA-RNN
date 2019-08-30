@@ -67,6 +67,35 @@ model=model.to(device)
 #x_input=np.array([-1,5.1,144,1.5,5,13,16])
 # Prediction
 #y_pred = model.test()
+for i in range(50):
+    x1=3
+    x2=6
+    x3=200
+    x4=2.5
+    x5=6
+    x6=12 
+    x7=20+i*0.6
+    min1=0
+    min2=1.5
+    min3=50
+    min4=0.4
+    min5=1.2
+    min6=0.9
+    min7=0
+    
+    max1=4
+    max2=7.1
+    max3=700
+    max4=2.7
+    max5=9.7
+    max6=24
+    max7=64
+    x_input=np.array([(x1-min1)/(max1-min1),(x2-min2)/(max2-min2),(x3-min3)/(max3-min3),(x4-min4)/(max4-min4),(x5-min5)/(max5-min5),(x6-min6)/(max6-min6),(x7-min7)/(max7-min7)])
+    x_input=np.array([0.04692096,  1.,.07408795,  0.00215829,  0.2352941, 0.30735931 , 0.18786207])
+    val=model.evalModel(x_input)
+    print(x_input,val)
+
+"""
 def mobile_phone(vars):
     x1=vars[0]
     x2=vars[1]
@@ -75,7 +104,7 @@ def mobile_phone(vars):
     x5=vars[4]
     x6=vars[5]    
     x7=vars[6]
-    min1=0
+    minx1=0
     min2=1.5
     min3=50
     min4=0.4
@@ -143,7 +172,6 @@ for solution in algorithm1.result:
 #  print(solution.objectives)
 
 
-"""
 y_pred = model.test()
 print(y_pred)
 fig1 = plt.figure()

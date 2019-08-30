@@ -71,7 +71,7 @@ def read_extract_data(input_path, debug=False):
         
         a=(y[i]-min_valy)/den_y
         y_norm[i]=float(a)
-        print(y_norm[i])
+        #print(y_norm[i])
         
                               
 
