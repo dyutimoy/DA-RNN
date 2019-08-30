@@ -34,7 +34,7 @@ def GetDataMatrix():
     
     
     # Turns categorical data into binary values across many columns    
-    X = pd.get_dummies(X, dummy_na = False, columns=['Make', 'Engine Fuel Type', 'Transmission Type', 'Driven_Wheels', 'Market Category', 'Vehicle Size', 'Vehicle Style'] );
+    X = pd.get_dummies(X, dummy_na = False, columns=['Make', 'Engine Fuel Type', 'Transmission Type', 'Driven_Wheels', 'Vehicle Size', 'Vehicle Style'] );
    
     # Fill the null values with zeros
     X.fillna(-1, inplace=True);

@@ -30,7 +30,7 @@ from dataparse import *
 parser = argparse.ArgumentParser(description="DA-RNN")
 
 # Dataset setting
-parser.add_argument('--dataroot', type=str, default="../phone/phoneDatasetFinal.csv", help='path to dataset')
+parser.add_argument('--dataroot', type=str, default="../phone/car_fea.csv", help='path to dataset')
 parser.add_argument('--workers', type=int, default=2, help='number of data loading workers [2]')
 parser.add_argument('--batchsize', type=int, default=128, help='input batch size [128]')
 
@@ -59,7 +59,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 model = DA_rnn(X, y,X_last, opt.ntimestep, opt.nhidden_encoder, opt.nhidden_decoder, opt.batchsize, opt.lr, opt.epochs,opt.resume)
 model=model.to(device)
 # Train
-model.train()
+#model.train()
 
 
 
@@ -117,7 +117,6 @@ for solution in algorithm3.result:
     print(solution.objectives)
 
 
-"""
 
 y_pred = model.test()
 print(y_pred)
@@ -141,3 +140,5 @@ plt.savefig("3_"+str(opt.name)+".png")
 plt.close(fig3)
 print('Finished Training')
 
+
+"""
