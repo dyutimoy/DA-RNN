@@ -59,7 +59,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 model = DA_rnn(X, y,X_last, opt.ntimestep, opt.nhidden_encoder, opt.nhidden_decoder, opt.batchsize, opt.lr, opt.epochs,opt.resume)
 model=model.to(device)
 # Train
-#model.train()
+model.train()
 
 
 
@@ -115,7 +115,7 @@ for solution in algorithm2.result:
     
 for solution in algorithm3.result:
     print(solution.objectives)
-
+"""
 
 
 y_pred = model.test()
@@ -141,4 +141,3 @@ plt.close(fig3)
 print('Finished Training')
 
 
-"""
