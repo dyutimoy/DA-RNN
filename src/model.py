@@ -432,13 +432,13 @@ class DA_rnn(nn.Module):
         
         if(self.resume==True):
                 
-                checkpointencoder = torch.load("../weights_new/EncoderEpochnew"+"50"+"_17_8.pt")
+                checkpointencoder = torch.load("../weights_new/EncoderEpochnew"+"25"+"_20_8.pt")
                 self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
                 self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
                 epoch_start = checkpointencoder['epoch']
                 loss = checkpointencoder['loss']
 
-                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew"+"50"+"_17_8.pt")
+                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew"+"25"+"_20_8.pt")
                 self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
                 self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
                 print("loading checkpoint "+str(epoch_start)+"with loss"+str(loss))
