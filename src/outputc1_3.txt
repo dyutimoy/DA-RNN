@@ -1,0 +1,4 @@
+nohup: ignoring input
+Namespace(batchsize=2048, cuda=False, dataroot='../phone/car_fea.csv', debug=False, epochs=1200, lr=0.001, manualSeed=None, name=2908, ngpu=0, nhidden_decoder=32, nhidden_encoder=32, ntimestep=10, resume=False, workers=2)
+/opt/anaconda3/lib/python3.7/site-packages/torch/nn/modules/rnn.py:54: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.1 and num_layers=1
+  "num_layers={}".format(dropout, num_layers))

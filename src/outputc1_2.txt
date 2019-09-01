@@ -1,0 +1,44 @@
+nohup: ignoring input
+Namespace(batchsize=512, cuda=False, dataroot='../phone/car_fea.csv', debug=False, epochs=1200, lr=0.001, manualSeed=None, name=2908, ngpu=0, nhidden_decoder=32, nhidden_encoder=32, ntimestep=10, resume=True, workers=2)
+/opt/anaconda3/lib/python3.7/site-packages/torch/nn/modules/rnn.py:54: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.1 and num_layers=1
+  "num_layers={}".format(dropout, num_layers))
+loading checkpoint 25with loss0.0007647509919479489
+/home/xeno1897/DA-RNN/src/model.py:249: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  alpha = F.softmax(x.view(-1, self.input_size))
+/home/xeno1897/DA-RNN/src/model.py:330: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  x.view(-1, 2 * self.decoder_num_hidden + self.encoder_num_hidden)).view(-1, self.T))
+Epochs:  25  Iterations:  17  Loss:  0.0009105298531186931
+Model's state_dict:
+gamma_x_l.weight 	 torch.Size([102, 102])
+gamma_x_l.bias 	 torch.Size([102])
+gamma_h_l.weight 	 torch.Size([32, 102])
+gamma_h_l.bias 	 torch.Size([32])
+encoder_lstm.weight_ih_l0 	 torch.Size([128, 102])
+encoder_lstm.weight_hh_l0 	 torch.Size([128, 32])
+encoder_lstm.bias_ih_l0 	 torch.Size([128])
+encoder_lstm.bias_hh_l0 	 torch.Size([128])
+encoder_attn.weight 	 torch.Size([1, 84])
+encoder_attn.bias 	 torch.Size([1])
+Model's state_dict:
+attn_layer.0.weight 	 torch.Size([32, 96])
+attn_layer.0.bias 	 torch.Size([32])
+attn_layer.2.weight 	 torch.Size([1, 32])
+attn_layer.2.bias 	 torch.Size([1])
+lstm_layer.weight_ih_l0 	 torch.Size([128, 1])
+lstm_layer.weight_hh_l0 	 torch.Size([128, 32])
+lstm_layer.bias_ih_l0 	 torch.Size([128])
+lstm_layer.bias_hh_l0 	 torch.Size([128])
+fc.weight 	 torch.Size([1, 33])
+fc.bias 	 torch.Size([1])
+fc_final1.weight 	 torch.Size([32, 64])
+fc_final1.bias 	 torch.Size([32])
+fc_final2.weight 	 torch.Size([1, 32])
+fc_final2.bias 	 torch.Size([1])
+Epochs:  27  Iterations:  51  Loss:  0.0010951134934336605
+Epochs:  29  Iterations:  85  Loss:  0.0008898388015736333
+Epochs:  31  Iterations:  119  Loss:  0.0008704379074248102
+Epochs:  33  Iterations:  153  Loss:  0.0008449164469151155
+Epochs:  35  Iterations:  187  Loss:  0.0008472986930214307
+Epochs:  37  Iterations:  221  Loss:  0.0008191069252515102
+Epochs:  39  Iterations:  255  Loss:  0.0008133023862576331
+Epochs:  41  Iterations:  289  Loss:  0.0008292592649334384
