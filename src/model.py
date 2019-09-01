@@ -106,7 +106,7 @@ class Encoder(nn.Module):
 
         # Fig 1. Temporal Attention Mechanism: Encoder is LSTM
         self.encoder_lstm = nn.LSTM(
-            input_size=self.input_size, hidden_size=self.encoder_num_hidden,dropout=0.1)
+            input_size=self.input_size, hidden_size=self.encoder_num_hidden,num_layers=2,dropout=0.1)
 
         # Construct Input Attention Mechanism via deterministic attention model
         # Eq. 8: W_e[h_{t-1}; s_{t-1}] + U_e * x^k
@@ -307,7 +307,7 @@ class Decoder(nn.Module):
                                         nn.Tanh(),
                                         nn.Linear(encoder_num_hidden, 1))
         self.lstm_layer = nn.LSTM(
-            input_size=1, hidden_size=decoder_num_hidden,dropout=0.1)
+            input_size=1, hidden_size=decoder_num_hidden,num_layers=2,dropout=0.1)
         self.fc = nn.Linear(encoder_num_hidden + 1, 1)
         self.fc_final1 = nn.Linear(decoder_num_hidden + encoder_num_hidden, decoder_num_hidden)
         self.fc_final2=nn.Linear(decoder_num_hidden , 1)
@@ -432,13 +432,13 @@ class DA_rnn(nn.Module):
         
         if(self.resume==True):
                 
-                checkpointencoder = torch.load("../weights_new/EncoderEpochnew"+"25"+"_20_8.pt")
+                checkpointencoder = torch.load("../weights_new/EncoderEpochnew"+"700"+"_17_8.pt")
                 self.Encoder.load_state_dict(checkpointencoder['model_state_dict'])
                 self.encoder_optimizer.load_state_dict(checkpointencoder['optimizer_state_dict'])
                 epoch_start = checkpointencoder['epoch']
                 loss = checkpointencoder['loss']
 
-                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew"+"25"+"_20_8.pt")
+                checkpointdecoder = torch.load("../weights_new/DecoderEpochnew"+"700"+"_17_8.pt")
                 self.Decoder.load_state_dict(checkpointdecoder['model_state_dict'])
                 self.decoder_optimizer.load_state_dict(checkpointdecoder['optimizer_state_dict'])
                 print("loading checkpoint "+str(epoch_start)+"with loss"+str(loss))
